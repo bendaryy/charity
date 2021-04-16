@@ -103,7 +103,7 @@
                         <x-slot name="content">
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
+                                {{ __('إدارة الحساب') }}
                             </div>
 
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
@@ -174,11 +174,20 @@
         </div>
     </div>
 
+
+
+
+
+
+
+
+
+
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-jet-responsive-nav-link href="{{ route('withdraw.index') }}" :active="request()->routeIs('dashboard')">
+                {{ __('الصفحة الرئيسية') }}
             </x-jet-responsive-nav-link>
         </div>
 
@@ -202,7 +211,7 @@
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
                     :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
+                    {{ __('الملف الشخصى') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -218,9 +227,36 @@
 
                     <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('تسجيل خروج') }}
                     </x-jet-responsive-nav-link>
                 </form>
+                @role('user')
+                @permission('charity_create')
+                <x-jet-responsive-nav-link href="{{ route('withdraw.create') }}">
+                    {{ __('إضافة صرف جديد') }}
+                </x-jet-responsive-nav-link>
+                @endpermission
+                @endrole
+                @role('admin')
+                <x-jet-responsive-nav-link href="{{ route('branch.create') }}">
+                    {{ __('إضافة فرع جديد') }}
+                </x-jet-responsive-nav-link>
+                @endrole
+                @role('admin')
+                <x-jet-responsive-nav-link href="{{ route('users.create') }}">
+                    {{ __('إضافة مسئول جديد') }}
+                </x-jet-responsive-nav-link>
+                @endrole
+                @permission('users_read')
+                <x-jet-responsive-nav-link href="{{ route('users.index') }}">
+                    {{ __('عرض الأعضاء') }}
+                </x-jet-responsive-nav-link>
+                @endpermission
+                @permission('charity_read')
+                <x-jet-responsive-nav-link href="{{ route('withdraw.index') }}">
+                    {{ __('عرض الصرف') }}
+                </x-jet-responsive-nav-link>
+                @endpermission
 
                 <!-- Team Management -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
