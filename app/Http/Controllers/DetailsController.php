@@ -9,7 +9,7 @@ class DetailsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:charity_create'])->only(['create', 'store']);
+        $this->middleware(['permission:charity_create','role:user'])->only(['create', 'store']);
         $this->middleware(['permission:charity_read'])->only(['index']);
         $this->middleware(['permission:charity_update'])->only(['update']);
         $this->middleware(['permission:charity_delete'])->only(['destroy']);

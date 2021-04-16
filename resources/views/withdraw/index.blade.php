@@ -12,9 +12,13 @@
 <body>
     <x-app-layout>
         <x-slot name="header">
+            @role('user')
+            @permission('charity_create')
             <div style="text-align: center;margin: 20px 0">
                 <a class="btn btn-success" href="{{ route('withdraw.create') }}">إنشاء صرف جديد</a>
             </div>
+            @endpermission
+            @endrole
             <form action="{{ route('withdraw.index') }}" method="GET">
                 <div class="col-md-4">
                     <input type="text" name="search" class="form-control" placeholder="البحث عن طريق  الكود">

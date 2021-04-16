@@ -5,15 +5,15 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('profile.show') }}">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('الصفحة الرئيسية') }}
+                    <x-jet-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('الملف الشخصى') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -136,6 +136,11 @@
                                 {{ __('عرض الصرف') }}
                             </x-jet-dropdown-link>
                             @endpermission
+                            @role('user')
+                            <x-jet-dropdown-link href="{{ route('details.create') }}">
+                                {{ __('إضافة مستفيد جديد') }}
+                            </x-jet-dropdown-link>
+                            @endrole
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                             <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
                                 {{ __('API Tokens') }}
@@ -222,14 +227,6 @@
                 @endif
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                        {{ __('تسجيل خروج') }}
-                    </x-jet-responsive-nav-link>
-                </form>
                 @role('user')
                 @permission('charity_create')
                 <x-jet-responsive-nav-link href="{{ route('withdraw.create') }}">
@@ -257,6 +254,19 @@
                     {{ __('عرض الصرف') }}
                 </x-jet-responsive-nav-link>
                 @endpermission
+                @role('user')
+                <x-jet-responsive-nav-link href="{{ route('details.create') }}">
+                    {{ __('إضافة مستفيد جديد') }}
+                </x-jet-responsive-nav-link>
+                @endrole
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                        {{ __('تسجيل خروج') }}
+                    </x-jet-responsive-nav-link>
+                </form>
 
                 <!-- Team Management -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
