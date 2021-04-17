@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Document</title>
 </head>
-
+<style>
+    table,tr,th,td{
+        text-align: center;
+    }
+</style>
 <body>
     <x-app-layout>
         <x-slot name="header">
@@ -23,6 +27,7 @@
 
                             <th scope="col">الإسم</th>
                             <th scope="col">البريد الإلكترونى</th>
+                            <th scope="col">الفرع المسئول عنه </th>
                             <th colspan="3">تصرف</th>
                         </tr>
                     </thead>
@@ -32,6 +37,7 @@
 
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->charity->name }}</td>
                             @permission('users_read')
                             <td>عرض</td>
                             @endpermission

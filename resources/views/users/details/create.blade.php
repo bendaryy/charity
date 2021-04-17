@@ -37,20 +37,25 @@
                         :value="old('NationalId')" required autofocus autocomplete="NationalId" />
                 </div>
                 <div class="form-group">
+                    <label for="personsNumbers">{{ __('عدد الأبناء') }}</label>
+                    <input id="personsNumbers" class="form-control" type="number" name="personsNumbers"
+                        :value="old('personsNumbers')"  autofocus autocomplete="personsNumbers" />
+                </div>
+                <div class="form-group">
                     <label for="phone">{{ __(' التليفون ') }}</label>
-                    <input id="phone" class="form-control" type="number" name="phone" :value="old('phone')" required
+                    <input id="phone" class="form-control" type="number" name="phone" :value="old('phone')"
                         autofocus autocomplete="phone" />
                 </div>
 
                 <div class="form-group">
                     <label for="AddressId">{{ __('العنوان بالبطاقة') }}</label>
                     <input id="AddressId" class="form-control" type="text" name="AddressId" :value="old('AddressId')"
-                        required autofocus autocomplete="AddressId" />
+                         autofocus autocomplete="AddressId" />
                 </div>
                 <div class="form-group">
                     <label>{{ __('العنوان الحالى') }}</label>
                     <input id="currentAddress" class="form-control" type="text" name="currentAddress"
-                        :value="old('currentAddress')" required autofocus autocomplete="currentAddress" />
+                        :value="old('currentAddress')"  autofocus autocomplete="currentAddress" />
                 </div>
                 <div class="form-group">
                     <label for="currentAddress">{{ __('حالة الإقامة') }}</label><br>
@@ -75,7 +80,7 @@
                 <div class="form-group">
                     <label>{{ __('قيمة الدخل') }}</label>
                     <input id="IncomeValue" class="form-control" type="number" name="IncomeValue"
-                        :value="old('IncomeValue')" required autofocus autocomplete="IncomeValue" />
+                        :value="old('IncomeValue')"  autofocus autocomplete="IncomeValue" />
                 </div>
 
                 <div class="form-group">

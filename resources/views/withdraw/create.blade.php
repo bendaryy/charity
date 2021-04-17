@@ -32,7 +32,7 @@
                     @endforeach
                     <a  href="{{ route('exchange.create') }}" class="btn btn-primary">إضافة نوع صرف جديد</a>
                 </div>
-                <h4 style="font-size: 20px;font-weight: bold;margin:10px">قيمة الصرف</h4>
+                <h4 style="font-size: 20px;font-weight: bold;margin:10px"> العدد / قيمة الصرف</h4>
                 <input type="text" name="value">
 
 
@@ -41,7 +41,11 @@
                 <select required name="details_id" class="select2 form-control" style="width: 30%">
                     <option value="" disabled selected="true">اختر المستفيد</option>
                     @foreach($details as $detail)
-                    <option value="{{ $detail->id }}">{{ $detail->name }} / {{ $detail->NationalId }}</option>
+                    <option value="{{ $detail->id }}">
+                        <h2>الإسم :{{ $detail->name }}</h2>
+                        <h2> الرقم القومى : {{ $detail->NationalId }}</h2>
+                        <h2> عدد الإبناء : {{ $detail->personsNumbers }}</h2>
+                    </option>
                     @endforeach
                 </select>
 

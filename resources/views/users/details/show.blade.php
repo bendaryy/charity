@@ -29,11 +29,12 @@
                     <th scope="col">الإسم</th>
                     <th scope="col">تاريخ البحث</th>
                     <th scope="col">الرقم القومى</th>
+                    <th scope="col">عدد الأبناء</th>
                     <th scope="col">التليفون</th>
                     <th scope="col">العنوان</th>
                     <th scope="col">العنوان الحالى</th>
                     <th scope="col">موقف السكن</th>
-                    <th scope="col">الجمعية التى تم الصرف منها </th>
+                    <th scope="col">إسم الجمعية</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +42,7 @@
                     <td>{{ $details->name }}</td>
                     <td>{{ $details->SearchDate }}</td>
                     <td>{{ $details->NationalId }}</td>
+                    <td>{{ $details->personsNumbers }}</td>
                     <td>{{ $details->phone }}</td>
                     <td>{{ $details->AddressId }}</td>
                     <td>{{ $details->currentAddress }}</td>

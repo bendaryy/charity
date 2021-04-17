@@ -42,18 +42,12 @@ class DetailsController extends Controller
             'name' => 'required',
             'SearchDate' => 'required',
             'NationalId' => 'required|numeric',
-            'phone' => 'required|numeric',
-            'AddressId' => 'required',
-            'currentAddress' => 'required',
-            'ResidenceStatus' => 'required',
-            'IncomeMethod' => 'required',
-            'IncomeValue' => 'required|numeric',
-            'SocialStatus' => 'required',
-            'charity_id' => 'required'
+
         ]);
         $details = new Details;
         $details->name = $request->name;
         $details->SearchDate = $request->SearchDate;
+        $details->personsNumbers = $request->personsNumbers;
         $details->NationalId = $request->NationalId;
         $details->charity_id = $request->charity_id;
         $details->phone = $request->phone;
