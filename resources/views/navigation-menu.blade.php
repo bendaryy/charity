@@ -136,6 +136,11 @@
                                 {{ __('عرض الصرف') }}
                             </x-jet-dropdown-link>
                             @endpermission
+
+                            <x-jet-dropdown-link href="{{ route('details.index') }}">
+                                {{ __('عرض جميع المستحقين') }}
+                            </x-jet-dropdown-link>
+
                             @role('user')
                             <x-jet-dropdown-link href="{{ route('details.create') }}">
                                 {{ __('إضافة مستفيد جديد') }}
@@ -254,6 +259,9 @@
                     {{ __('عرض الصرف') }}
                 </x-jet-responsive-nav-link>
                 @endpermission
+                <x-jet-responsive-nav-link href="{{ route('details.index') }}">
+                    {{ __('عرض جميع المستحقين') }}
+                </x-jet-responsive-nav-link>
                 @role('user')
                 <x-jet-responsive-nav-link href="{{ route('details.create') }}">
                     {{ __('إضافة مستفيد جديد') }}

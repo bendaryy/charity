@@ -114,7 +114,9 @@ class WithDrawController extends Controller
         //     ->where('date', '<=', $toDate)
         //     ->get();
 
-        $withDraws = WithDraw::where('date', '>=', $fromDate)
+        $withDraws = WithDraw::when($request->search3, function ($query) use ($request) {
+            return $query->where('details_id', 'like', '%' . $request->search3 . "%");
+        })->where('date', '>=', $fromDate)
             ->where('date', '<=', $toDate)
             ->get();
         return view('withdraw.index', compact('withDraws'));

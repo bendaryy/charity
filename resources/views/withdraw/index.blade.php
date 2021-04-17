@@ -35,15 +35,19 @@
                     <div class="row">
                         <div class="container-fluid">
                             <div class="form-group row">
-                                <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
-                                <div class="col-sm-3">
-                                    <input type="date" name="fromDate" id="from" required>
-                                </div>
-                                <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <input type="date" name="toDate" id="from" required>
                                 </div>
+                                <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
                                 <div class="col-sm-2">
+                                    <input type="date" name="fromDate" id="from" required>
+                                </div>
+                                <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="search3" placeholder="البحث عن طريق  الكود">
+                                </div>
+                                <label class="col-form-label col-sm-1" style="margin-left: 30px">إختيارى</label>
+                                <div class="col-sm-6" style="margin: auto;text-align: center;margin-top:20px">
                                     <button type="submit" class="btn btn-primary" name="search">بحث</button>
                                 </div>
                             </div>
