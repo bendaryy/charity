@@ -41,6 +41,20 @@
                         name="password_confirmation" required autocomplete="new-password" />
                 </div>
 
+                <div style="margin: 20px 0">
+                    <h4>اختر الفرع</h4>
+                    <select class="custom-select" name="charity_id" required>
+                        <option selected>اختر الفرع للمسئول</option>
+                        @foreach ($Branches as $branch)
+                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                        @endforeach
+                    </select>
+                    <div style="text-align: center; margin:20px 0">
+                        <a style="text-align: center" href="{{ route('branch.create') }}" class="btn btn-primary">إضافة
+                            فرع جديد</a>
+
+                    </div>
+                </div>
                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-jet-label for="terms">
@@ -61,28 +75,23 @@
                     </x-jet-label>
                 </div>
                 @endif
-                <div style="margin: 20px 0">
 
-                    <select class="custom-select" name="charity_id">
-                        @foreach ($Branches as $branch)
-                        {{-- <option selected>Open this select menu</option> --}}
-                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
-                        @endforeach
-                    </select>
-                    <div style="text-align: center; margin:20px 0">
-                        <a style="text-align: center" href="{{ route('branch.create') }}" class="btn btn-success">إضافة فرع جديد</a>
-
-                    </div>
-                </div>
-                    <div class="tab-content">
+                <div class="tab-content">
                     <div class="tab-bane active" id="users">
-                        <label for=""><input type="checkbox" name="permissions[]" value="charity_create">إضافة مستفيد جديد</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="charity_read">عرض جميع المستفيدين</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="charity_update">تعديل على المستفيدين</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="charity_delete">مسح المستفيدين</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="users_read">عرض أعضاء الجمعيات</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="users_create">إنشاء عضو جديد</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="users_delete">مسح الأعضاء</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="charity_create">إضافة مستفيد
+                            جديد</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="charity_read">عرض جميع
+                            المستفيدين</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="charity_update">تعديل على
+                            المستفيدين</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="charity_delete">مسح
+                            المستفيدين</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="users_read">عرض أعضاء
+                            الجمعيات</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="users_create">إنشاء عضو
+                            جديد</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="users_delete">مسح
+                            الأعضاء</label>
 
                     </div>
                 </div>
@@ -91,10 +100,11 @@
                     {{-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('لدى حساب بالفعل؟') }}
                     </a> --}}
-
-                    <x-jet-button class="ml-4">
-                        {{ __('إضافة') }}
-                    </x-jet-button>
+                    <div style="text-align: center;margin:auto">
+                        <button class="btn btn-success" style="padding: 10px 30px">
+                            {{ __('إضافة') }}
+                        <button>
+                    </div>
                 </div>
             </form>
         </x-slot>
