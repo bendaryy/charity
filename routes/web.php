@@ -32,5 +32,6 @@ Route::resource('users', UsersController::class)->middleware('auth');
 Route::resource('exchange', ExchangeController::class)->middleware('auth');
 Route::get('users/exchanges/{id}', [DetailsController::class, 'exchange'])->name('exchange.index')->middleware('auth');
 Route::resource('withdraw', WithDrawController::class)->middleware('auth');
+Route::post('search',[WithDrawController::class,'search'])->name('search');
 Route::resource('branch', BranchController::class)->middleware('auth');
 

@@ -11,13 +11,8 @@
 
 <body>
 
-    <x-guest-layout>
-        <x-jet-authentication-card>
-            <x-slot name="logo">
-                <x-jet-authentication-card-logo />
-            </x-slot>
-
-            <x-jet-validation-errors class="mb-4" />
+    <x-app-layout>
+        <x-slot name="header">
 
             <form method="POST" action="{{ route('users.store') }}">
                 @csrf
@@ -85,9 +80,8 @@
                         <label for=""><input type="checkbox" name="permissions[]" value="charity_read">عرض جميع المستفيدين</label>
                         <label for=""><input type="checkbox" name="permissions[]" value="charity_update">تعديل على المستفيدين</label>
                         <label for=""><input type="checkbox" name="permissions[]" value="charity_delete">مسح المستفيدين</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="users_index">عرض أعضاء الجمعيات</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="users_read">عرض أعضاء الجمعيات</label>
                         <label for=""><input type="checkbox" name="permissions[]" value="users_create">إنشاء عضو جديد</label>
-                        <label for=""><input type="checkbox" name="permissions[]" value="users_read">عرض الأعضاء</label>
                         <label for=""><input type="checkbox" name="permissions[]" value="users_delete">مسح الأعضاء</label>
 
                     </div>
@@ -103,8 +97,8 @@
                     </x-jet-button>
                 </div>
             </form>
-        </x-jet-authentication-card>
-    </x-guest-layout>
+        </x-slot>
+    </x-app-layout>
 </body>
 
 </html>

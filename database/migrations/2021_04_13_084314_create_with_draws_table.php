@@ -18,6 +18,7 @@ class CreateWithDrawsTable extends Migration
             $table->string('type');
             $table->string('value');
             $table->string('details')->nullable();
+            $table->string('date');
             $table->unsignedBigInteger('details_id');
             $table->unsignedBigInteger('charity_id');
             $table->foreign('details_id')->references('id')->on('details')->onDelete('cascade');

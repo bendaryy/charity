@@ -19,10 +19,36 @@
             </div>
             @endpermission
             @endrole
-            <form action="{{ route('withdraw.index') }}" method="GET">
-                <div class="col-md-4">
-                    <input type="text" name="search" class="form-control" placeholder="البحث عن طريق  الكود">
-                    <button type="submit" class="btn btn-primary">بحث</button>
+            {{-- <form action="{{ route('withdraw.index') }}" method="GET">
+            <div class="col-md-4">
+                <input type="text" name="search" class="form-control" placeholder="البحث عن طريق  الكود">
+                <button type="submit" class="btn btn-primary">بحث</button>
+            </div>
+
+            </form> --}}
+
+            <form action="{{ route('search') }}" method="POST">
+                @csrf
+                @method('POST')
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="form-group row">
+                                <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
+                                <div class="col-sm-3">
+                                    <input type="date" name="fromDate" id="from" required>
+                                </div>
+                                <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
+                                <div class="col-sm-3">
+                                    <input type="date" name="toDate" id="from" required>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-primary" name="search">بحث</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </form>
@@ -33,7 +59,8 @@
                         <th scope="col">الكود</th>
                         <th scope="col">الاسم</th>
                         <th scope="col">الرقم القومى</th>
-                        <th scope="col">نوع االصرف</th>
+                        <th scope="col">نوع الصرف</th>
+                        <th scope="col">تاريخ الصرف</th>
                         <th scope="col">قيمة الصرف</th>
                         <th scope="col">الصرف من </th>
                     </tr>
@@ -45,6 +72,7 @@
                         <td>{{ $withDraw->userDetails->name }}</td>
                         <td>{{ $withDraw->userDetails->NationalId }}</td>
                         <td>{{ $withDraw->type }}</td>
+                        <td>{{ $withDraw->date }}</td>
                         <td>{{ $withDraw->value }}</td>
                         <td>{{ $withDraw->charity->name }}</td>
                     </tr>

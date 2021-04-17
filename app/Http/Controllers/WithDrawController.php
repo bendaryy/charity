@@ -7,18 +7,20 @@ use App\Models\Exchange;
 use App\Models\WithDraw;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WithDrawController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role:user','permission:charity_create'])->only(['create','store']);
+        $this->middleware(['role:user', 'permission:charity_create'])->only(['create', 'store']);
     }
     public function index(Request $request)
     {
         $withDraws = WithDraw::when($request->search, function ($query) use ($request) {
             return $query->where('details_id', 'like', '%' . $request->search . "%");
         })->get();
+
         return view('withdraw.index', compact('withDraws'));
     }
 
@@ -46,10 +48,12 @@ class WithDrawController extends Controller
             'type' => 'required',
             'value' => 'required',
             'details_id' => 'required',
+            'date' => 'required'
         ]);
         $withDraw = new WithDraw;
         $withDraw->type = $request->type;
         $withDraw->value = $request->value;
+        $withDraw->date = $request->date;
         $withDraw->details_id = $request->details_id;
         $withDraw->charity_id = auth()->user()->charity_id;
         $withDraw->details = $request->details;
@@ -103,7 +107,16 @@ class WithDrawController extends Controller
     }
     public function search(Request $request)
     {
-        $q = $request->text;
-        $loc = $request->location;
+        $fromDate = $request->input('fromDate');
+        $toDate = $request->input('toDate');
+        // $query = DB::table('with_draws')->select()
+        //     ->where('date', '>=', $fromDate)
+        //     ->where('date', '<=', $toDate)
+        //     ->get();
+
+        $withDraws = WithDraw::where('date', '>=', $fromDate)
+            ->where('date', '<=', $toDate)
+            ->get();
+        return view('withdraw.index', compact('withDraws'));
     }
 }
