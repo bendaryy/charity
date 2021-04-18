@@ -36,11 +36,11 @@
                         <div class="container-fluid">
                             <div class="form-group row">
                                 <div class="col-sm-2">
-                                    <input type="date" value="<?php echo date("Y-m-d");?>" name="toDate" id="from" required>
+                                    <input type="date" value="{{date("Y-m-d")}}" name="toDate" id="from" required>
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
                                 <div class="col-sm-2">
-                                    <input type="date" value="<?php echo date("Y-m-d");?>" name="fromDate" id="fromDate" required>
+                                    <input type="date" value="{{date("Y-m-d")}}" name="fromDate" id="fromDate" required>
                                 </div>
                                 <label for="date"  class="col-form-label col-sm-2">التاريخ من</label>
                                 <div class="col-sm-2">

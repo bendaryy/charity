@@ -19,6 +19,8 @@ class CreateDetailsTable extends Migration
             $table->string('SearchDate');
             $table->integer('NationalId');
             $table->string('personsNumbers');
+            $table->string('typestate')->nullable();
+            $table->string('notee')->nullable();
             $table->string('phone')->nullable();
             $table->string('AddressId', 300)->nullable();
             $table->string('currentAddress', 300)->nullable();

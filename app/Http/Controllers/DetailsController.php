@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Details;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DetailsController extends Controller
@@ -48,6 +49,8 @@ class DetailsController extends Controller
         $details->name = $request->name;
         $details->SearchDate = $request->SearchDate;
         $details->personsNumbers = $request->personsNumbers;
+        $details->typestate = $request->typestate;
+        $details->notee = $request->notee;
         $details->NationalId = $request->NationalId;
         $details->charity_id = $request->charity_id;
         $details->phone = $request->phone;
@@ -117,6 +120,7 @@ class DetailsController extends Controller
         $details = Details::find($id);
         return view('users.details.show', compact('details'));
     }
+
     public function exchange($id)
     {
         $details = Details::find($id);

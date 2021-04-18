@@ -25,6 +25,16 @@
                     <input id="name" class="form-control" type="text" name="name" :value="old('name')" required
                         autofocus autocomplete="name" />
                 </div>
+                <div class="form-group col" style="margin: auto">
+                    <label for="typestate">{{ __('حالة المستفيد') }}</label>
+                    <input id="typestate" class="form-control" type="text" name="typestate" :value="old('typestate')"
+                        autofocus autocomplete="typestate" />
+                </div>
+                <div class="form-group col" style="margin: auto">
+                    <label for="notee">{{ __('ملاحظات') }}</label>
+                    <textarea id="notee" class="form-control" type="text" name="notee"
+                        autofocus autocomplete="notee" placeholder="الملاحظات"></textarea>
+                </div>
                 <div class="form-group">
                     <label for="SearchDate">{{ __('تاريخ البحث') }}</label>
                     <input id="SearchDate" class="form-control" type="date" name="SearchDate" value="<?php echo date("Y-m-d");?>"

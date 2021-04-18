@@ -64,6 +64,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::whereRoleIs('user')->find($id);
+
         return view('users.show', compact('user'));
     }
 
@@ -73,11 +74,11 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+        $user = User::findOrFail($id);
+        $Branches = Branch::all();
+        return view('users.edit',compact('user','Branches'));
     }
-
     /**
      * Update the specified resource in storage.
      *
