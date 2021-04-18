@@ -63,7 +63,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::with('charity')->find($id);
+        $user = User::whereRoleIs('user')->find($id);
         return view('users.show', compact('user'));
     }
 
@@ -98,6 +98,8 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('danger','تم مسح المستخدم بنجاح');
     }
 }

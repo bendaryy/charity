@@ -50,7 +50,7 @@
                 </select>
 
                 <h4 for="type" style="font-size: 20px;font-weight: bold;margin:10px">تاريخ الصرف</h4>
-                <input type="date" name="date">
+                <input type="date" name="date" value="<?php echo date("Y-m-d");?>">
                 <h4 style="font-size: 20px;font-weight: bold;margin:10px"> التفاصيل</h4>
                 <textarea name="details" id="" cols="30" rows="10"></textarea>
                 <div>

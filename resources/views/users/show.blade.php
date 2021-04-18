@@ -19,6 +19,7 @@
 
                         <th scope="col">الإسم</th>
                         <th scope="col">الإيميل</th>
+                        <th scope="col">الجمعية المسئول عنها</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,6 +27,8 @@
 
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->charity->name }}</td>
+
                     </tr>
                 </tbody>
             </table>
