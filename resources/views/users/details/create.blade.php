@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="SearchDate">{{ __('تاريخ البحث') }}</label>
-                    <input id="SearchDate" class="form-control" type="date" name="SearchDate" :value="old('SearchDate')"
+                    <input id="SearchDate" class="form-control" type="date" name="SearchDate" value="<?php echo date("Y-m-d");?>"
                         required autofocus autocomplete="SearchDate" />
                 </div>
 
