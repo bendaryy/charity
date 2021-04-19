@@ -16,8 +16,8 @@ class CreateDetailsTable extends Migration
         Schema::create('details', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('SearchDate');
-            $table->integer('NationalId');
+            $table->string('SearchDate')->nullable();
+            $table->float('NationalId');
             $table->string('personsNumbers');
             $table->string('typestate')->nullable();
             $table->string('notee')->nullable();

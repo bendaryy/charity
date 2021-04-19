@@ -57,7 +57,9 @@
                         </td>
                         @endpermission
                         @permission('users_update')
-                        <td>تعديل</td>
+                        <td>
+                            <a href="{{ route('users.edit',$user->id) }}" class="btn btn-success">تعديل</a>
+                        </td>
                         @endpermission
 
                     </tr>

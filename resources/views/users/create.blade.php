@@ -92,6 +92,8 @@
                             جديد</label>
                         <label for=""><input type="checkbox" name="permissions[]" value="users_delete">مسح
                             الأعضاء</label>
+                        <label for=""><input type="checkbox" name="permissions[]" value="users_update">تعديل على الأعضاء
+                            </label>
 
                     </div>
                 </div>

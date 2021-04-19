@@ -13,10 +13,15 @@
 
     <x-app-layout>
         <x-slot name="header">
+            @if(session()->has('success'))
+            <div class="alert alert-success" style="text-align: center">
+                {{ session()->get('success') }}
+            </div>
+            @endif
 
-            <form method="POST" action="{{ route('users.store') }}">
+            <form method="POST" action="{{ route('users.update',$user->id) }}">
                 @csrf
-
+                @method("PUT")
                 <div>
                     <x-jet-label for="name" value="{{ __('الإسم') }}" />
                     <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $user->name }}"
@@ -31,7 +36,7 @@
 
 
 
-                <div style="margin: 20px 0">
+                <div style="margin: 20px 0;display: inline">
                     <h4>اختر الفرع</h4>
                     <select class="custom-select" name="charity_id" required>
                         @foreach ($Branches as $branch)
@@ -39,12 +44,57 @@
                             {{ $branch->name }}</option>
                         @endforeach
                     </select>
-                    <div style="text-align: center; margin:20px 0">
-                        <a style="text-align: center" href="{{ route('branch.create') }}" class="btn btn-primary">إضافة
-                            فرع جديد</a>
 
-                    </div>
                 </div>
+                <h3 style="text-align: center;margin:20px;padding:20px">الصلاحيات</h3>
+                @foreach ($permission as $permission )
+                <label>
+                    <input type="checkbox" name="permissions[]"
+                        {{ $user->hasPermission("$permission->name") ? 'checked' : '' }} value="{{ $permission->id }}"
+                        style="margin:3px" />
+                    @if($permission->name == "users_delete")
+                    مسح الأعضاء
+                    @elseif($permission->name == "users_read")
+                    عرض أعضاء الجمعيات
+                    @elseif($permission->name == "users_create")
+                    إنشاء عضو جديد
+                    @elseif($permission->name == "users_update")
+                    تعديل على الإعضاء
+                    @elseif($permission->name == "charity_create")
+                    إنشاء مستفيد جديد
+                    @elseif($permission->name == "charity_delete")
+                    مسح المستفيدين
+                    @elseif($permission->name == "charity_read")
+                    عرض جميع المستفيدين
+                    @elseif($permission->name == "charity_update")
+                    تعديل على الجمعية
+                    @endif
+                </label>
+                @endforeach
+
+
+                {{-- <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                name="permissions[]" value="charity_create">إضافة مستفيد
+                جديد</label>
+                <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                        name="permissions[]" value="charity_read">عرض جميع
+                    المستفيدين</label>
+                <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                        name="permissions[]" value="charity_update">تعديل على
+                    المستفيدين</label>
+                <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                        name="permissions[]" value="charity_delete">مسح
+                    المستفيدين</label>
+                <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                        name="permissions[]" value="users_read">عرض أعضاء
+                    الجمعيات</label>
+                <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                        name="permissions[]" value="users_create">إنشاء عضو
+                    جديد</label>
+                <label for=""><input type="checkbox" {{ $user->hasPermission("$permission->name") ? 'checked' : '' }}
+                        name="permissions[]" value="users_delete">مسح
+                    الأعضاء</label> --}}
+
                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-jet-label for="terms">
@@ -66,7 +116,7 @@
                 </div>
                 @endif
 
-                <div class="tab-content">
+                {{-- <div class="tab-content">
                     <div class="tab-bane active" id="users">
                         <label for=""><input type="checkbox" name="permissions[]" value="charity_create">إضافة مستفيد
                             جديد</label>
@@ -84,7 +134,8 @@
                             الأعضاء</label>
 
                     </div>
-                </div>
+                </div> --}}
+
 
                 <div class="flex items-center justify-end mt-4">
                     {{-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
@@ -92,7 +143,7 @@
                     </a> --}}
                     <div style="text-align: center;margin:auto">
                         <button class="btn btn-success" style="padding: 10px 30px">
-                            {{ __('إضافة') }}
+                            {{ __('تعديل') }}
                             <button>
                     </div>
                 </div>

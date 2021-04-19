@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\Permission;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -67,6 +68,9 @@ class UsersController extends Controller
 
         return view('users.show', compact('user'));
     }
+    public function withDrawShow($userId , $whithDrawId){
+        $user = User::findOrFail($userId);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -77,7 +81,8 @@ class UsersController extends Controller
     public function edit($id){
         $user = User::findOrFail($id);
         $Branches = Branch::all();
-        return view('users.edit',compact('user','Branches'));
+        $permission = Permission::all();
+        return view('users.edit',compact('user','Branches','permission'));
     }
     /**
      * Update the specified resource in storage.
@@ -86,9 +91,18 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            "charity_id" => 'required'
+        ]);
+        $request_data = $request->except(['permissions']);
+        $user->update($request_data);
+        $request->permissions ? $user->syncPermissions($request->permissions) : false;
+        // session()->flash('success', __('تم التعديل بنجاح '));
+        return redirect()->back()->with('success','تم التعديل بنجاح');
     }
 
     /**
