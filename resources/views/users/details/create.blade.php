@@ -120,7 +120,6 @@
                     <input id="MedicalCondition" class="form-control" type="text" name="MedicalCondition"
                         :value="old('MedicalCondition')" autofocus autocomplete="MedicalCondition" />
                 </div>
-                <input type="hidden" name="charity_id" value="{{ auth()->user()->charity_id }}">
                 <div class="form-group">
                     <label for="HusbundOrWifeName">{{ __('إسم الزوج أو الزوجة') }}</label>
                     <input id="HusbundOrWifeName" class="form-control" type="text" name="HusbundOrWifeName"

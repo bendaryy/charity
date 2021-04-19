@@ -67,6 +67,7 @@
                         <th scope="col">تاريخ الصرف</th>
                         <th scope="col">قيمة الصرف</th>
                         <th scope="col">الصرف من </th>
+                        <th scope="col">بيانات المستفيد</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,6 +80,9 @@
                         <td>{{ $withDraw->date }}</td>
                         <td>{{ $withDraw->value }}</td>
                         <td>{{ $withDraw->charity->name }}</td>
+                        <td>
+                            <a href="{{ route('details.show',$withDraw->userDetails->id) }}" class="btn btn-info">عرض بيانات المستفيد</a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

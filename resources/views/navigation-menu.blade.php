@@ -126,11 +126,11 @@
                                 {{ __('إضافة مسئول جديد') }}
                             </x-jet-dropdown-link>
                             @endrole
-                            @permission('users_read')
+                            @role('admin')
                             <x-jet-dropdown-link href="{{ route('users.index') }}">
                                 {{ __('عرض الأعضاء') }}
                             </x-jet-dropdown-link>
-                            @endpermission
+                            @endrole
                             @permission('charity_read')
                             <x-jet-dropdown-link href="{{ route('withdraw.index') }}">
                                 {{ __('عرض الصرف') }}
@@ -138,7 +138,7 @@
                             @endpermission
 
                             <x-jet-dropdown-link href="{{ route('details.index') }}">
-                                {{ __('عرض جميع المستحقين') }}
+                                {{ __('عرض جميع المستفيدين') }}
                             </x-jet-dropdown-link>
 
                             @role('user')
@@ -249,18 +249,18 @@
                     {{ __('إضافة مسئول جديد') }}
                 </x-jet-responsive-nav-link>
                 @endrole
-                @permission('users_read')
+                @role('admin')
                 <x-jet-responsive-nav-link href="{{ route('users.index') }}">
                     {{ __('عرض الأعضاء') }}
                 </x-jet-responsive-nav-link>
-                @endpermission
+                @endrole
                 @permission('charity_read')
                 <x-jet-responsive-nav-link href="{{ route('withdraw.index') }}">
                     {{ __('عرض الصرف') }}
                 </x-jet-responsive-nav-link>
                 @endpermission
                 <x-jet-responsive-nav-link href="{{ route('details.index') }}">
-                    {{ __('عرض جميع المستحقين') }}
+                    {{ __('عرض جميع المستفيدين') }}
                 </x-jet-responsive-nav-link>
                 @role('user')
                 <x-jet-responsive-nav-link href="{{ route('details.create') }}">
