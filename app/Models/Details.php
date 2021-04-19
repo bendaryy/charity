@@ -11,4 +11,7 @@ class Details extends Model
     public function branch(){
         return $this->belongsTo(Branch::class,'charity_id');
     }
+    public function withdraw(){
+        return $this->hasMany(WithDraw::class);
+    }
 }

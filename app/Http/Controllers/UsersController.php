@@ -68,9 +68,8 @@ class UsersController extends Controller
 
         return view('users.show', compact('user'));
     }
-    public function withDrawShow($userId , $whithDrawId){
-        $user = User::findOrFail($userId);
-    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -101,8 +100,7 @@ class UsersController extends Controller
         $request_data = $request->except(['permissions']);
         $user->update($request_data);
         $request->permissions ? $user->syncPermissions($request->permissions) : false;
-        // session()->flash('success', __('تم التعديل بنجاح '));
-        return redirect()->back()->with('success','تم التعديل بنجاح');
+        return redirect()->route('users.index')->with('success','تم التعديل بنجاح');
     }
 
     /**

@@ -21,7 +21,11 @@
     <x-app-layout>
         <x-slot name="header">
 
-
+            @if(session()->has('success'))
+            <div class="alert alert-success" style="text-align: center">
+                {{ session()->get('success') }}
+            </div>
+            @endif
             <h2 style="text-align: center">عدد الأعضاء ({{ count($users) }})</h2>
 
 

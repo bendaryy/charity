@@ -109,32 +109,22 @@ class WithDrawController extends Controller
     {
         $fromDate = $request->input('fromDate');
         $toDate = $request->input('toDate');
-        $nationalId = $request->NationalId;
-
-
-        $withDraws = WithDraw::when($request->search3, function ($query) use ($request) {
-            return $query->where('details_id', 'like', '%' . $request->search3 . "%");
-        })->where('date', '>=', $fromDate)
-            ->where('date', '<=', $toDate)
-            ->get();
-        return view('withdraw.index', compact('withDraws'));
-
-
-        // $query = DB::table('with_draws')->select()
-        //     ->where('date', '>=', $fromDate)
-        //     ->where('date', '<=', $toDate)
-        //     ->get();
+        $q = $request->text;
 
         // $withDraws = WithDraw::when($request->search3, function ($query) use ($request) {
         //     return $query->where('details_id', 'like', '%' . $request->search3 . "%");
-        // })->whereHas('userDetails', function ($query) use ($nationalId) {
-        //     $query->where('NationalId', $nationalId);
         // })->where('date', '>=', $fromDate)
         //     ->where('date', '<=', $toDate)
         //     ->get();
-        // return view('withdraw.index', compact('withDraws'));
 
+        // $withDraws = WithDraw::where('type','LIKE',"%".$q."%")->whereHas("userDetails.NationalId",function(Builder $query))
 
+        $withDraws = WithDraw::whereHas('userDetails', function ($query) use ($q) {
+            $query->where('NationalId', "LIKE", "%" . $q . "%");
+        })->with(['userDetails' => function ($query) use ($q) {
+            $query->where('NationalId', 'like', '%' . $q . '%');
+        }])->where('date', '>=', $fromDate)->where('date', '<=', $toDate)->get();
 
+        return view('withdraw.index', compact('withDraws'));
     }
 }

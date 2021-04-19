@@ -44,7 +44,7 @@
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="search3" placeholder="البحث عن طريق  الكود">
+                                    <input type="text" name="text" placeholder="البحث عن الرقم  القومى">
                                 </div>
                                 <label class="col-form-label col-sm-1" style="margin-left: 30px">إختيارى</label>
                                 <div class="col-sm-6" style="margin: auto;text-align: center;margin-top:20px">
