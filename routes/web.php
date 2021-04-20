@@ -27,11 +27,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::resource('details', DetailsController::class)->middleware('auth');
+Route::resource('details', DetailsController::class)->except('edit')->middleware('auth');
+Route::post('details/{id}/edit',[DetailsController::class,'edit'])->name('details.edit')->middleware('auth');
 Route::resource('users', UsersController::class)->middleware('auth');
 Route::resource('exchange', ExchangeController::class)->middleware('auth');
 Route::get('users/exchanges/{id}', [DetailsController::class, 'exchange'])->name('exchange.index')->middleware('auth');
 Route::resource('withdraw', WithDrawController::class)->middleware('auth');
 Route::post('search',[WithDrawController::class,'search'])->name('search');
+Route::POST('/details/search',[DetailsController::class,'search'])->name('details.search')->middleware('auth');
+Route::POST('/details/search2',[DetailsController::class,'search2'])->name('details.search2')->middleware('auth');
 Route::resource('branch', BranchController::class)->middleware('auth');
 

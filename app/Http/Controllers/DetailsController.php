@@ -12,10 +12,17 @@ class DetailsController extends Controller
     {
         $this->middleware(['permission:charity_create', 'role:user'])->only(['create', 'store']);
         $this->middleware(['permission:charity_read'])->only(['index']);
-        $this->middleware(['permission:charity_update'])->only(['update']);
+        $this->middleware(['permission:charity_update', 'role:user'])->only(['update', 'edit']);
         $this->middleware(['permission:charity_delete'])->only(['destroy']);
     }
     public function index(Request $request)
+    {
+        $details = Details::where("charity_id", auth()->user()->charity_id)->get();
+        $allDetails = Details::all();
+        return view('users.details.index', compact('details', 'allDetails'));
+    }
+
+    public function search(Request $request)
     {
         $details = Details::when($request->search, function ($query) use ($request) {
             return $query->where('NationalId', 'like', '%' . $request->search . "%")
@@ -32,7 +39,10 @@ class DetailsController extends Controller
                 ->orWhere('ninePersonId', 'like', '%' . $request->search . "%")
                 ->orWhere('tenPersonId', 'like', '%' . $request->search . "%");
         })->where("charity_id", auth()->user()->charity_id)->get();
-
+        return view('users.details.index', compact('details'));
+    }
+    public function search2(Request $request)
+    {
         $allDetails = Details::when($request->search2, function ($query) use ($request) {
             return $query->where('NationalId', 'like', '%' . $request->search2 . "%")
                 ->orWhere('HusbundOrWifeId', 'like', '%' . $request->search2 . "%")
@@ -48,8 +58,9 @@ class DetailsController extends Controller
                 ->orWhere('tenPersonId', 'like', '%' . $request->search2 . "%");
         })->get();
 
-        return view('users.details.index', compact('details', 'allDetails'));
+        return view('users.details.index', compact('allDetails'));
     }
+
     public function create()
     {
         return view('users.details.create');

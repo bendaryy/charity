@@ -29,9 +29,9 @@
         <x-slot name="header">
 
             @role('user')
-            <form action="{{ route('details.index') }}" method="get">
+            <form action="{{ route('details.search') }}" method="POST">
                 @csrf
-                {{-- @method("POST") --}}
+                @method("POST")
                 <div class="col-md-4" style="margin: 30px auto">
                     <input type="text" name="search" class="form-control" placeholder="البحث عن طرق الرقم القومى">
                     <button style="position: absolute;
@@ -76,7 +76,11 @@
                             <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض البيانات</a>
                         </td>
                         <td>
-                            <a href="{{ route('details.edit',$detail->id) }}" class="btn btn-success">تعديل البيانات</a>
+                            <form method="post" action="{{ route('details.edit',$detail->id) }}" >
+                                @method("POST")
+                                @csrf
+                                <button type="submit" class="btn btn-success">تعديل البيانات</button>
+                            </form>
 
                         </td>
                     </tr>
@@ -87,7 +91,9 @@
             @endrole
 
             @role('admin')
-            <form action="{{ route('details.index') }}" method="GET">
+            <form action="{{ route('details.search2') }}" method="POST">
+                @csrf
+                @method("POST")
                 <div class="col-md-4" style="margin: 30px auto">
                     <input type="text" name="search2" class="form-control" placeholder="البحث عن طرق الرقم القومى">
                     <button style="position: absolute;
@@ -131,10 +137,16 @@
                         <td>
                             <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض البيانات</a>
                         </td>
-                        <td>
-                            <a href="{{ route('details.edit',$detail->id) }}" class="btn btn-success">تعديل البيانات</a>
 
-                        </td>
+                        {{-- <td>
+                            <form method="post" action="{{ route('details.edit',$detail->id) }}" >
+                                @method("POST")
+                                @csrf
+                                <button type="submit" class="btn btn-success">تعديل البيانات</button>
+                            </form>
+
+                        </td> --}}
+
                     </tr>
                     @endforeach
 
