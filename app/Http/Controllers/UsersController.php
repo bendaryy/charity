@@ -13,8 +13,8 @@ class UsersController extends Controller
     {
         $this->middleware(['role:admin'])->only('index');
         $this->middleware(['permission:users_create'])->only(['create', 'store']);
-        $this->middleware(['permission:users_update'])->only('update');
-        $this->middleware(['permission:users_delete'])->only('destroy');
+        $this->middleware(['permission:users_update', "role:admin"])->only(['edit', 'update']);
+        $this->middleware(['permission:users_delete', "role:admin"])->only('destroy');
     }
 
     public function index(Request $request)
@@ -64,7 +64,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::whereRoleIs('user')->find($id);
+        $user = User::whereRoleIs('user')->findOrFail($id);
 
         return view('users.show', compact('user'));
     }
@@ -77,11 +77,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
+    public function edit($id)
+    {
         $user = User::findOrFail($id);
         $Branches = Branch::all();
         $permission = Permission::all();
-        return view('users.edit',compact('user','Branches','permission'));
+        return view('users.edit', compact('user', 'Branches', 'permission'));
     }
     /**
      * Update the specified resource in storage.
@@ -90,7 +91,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,User $user)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required',
@@ -100,7 +101,7 @@ class UsersController extends Controller
         $request_data = $request->except(['permissions']);
         $user->update($request_data);
         $request->permissions ? $user->syncPermissions($request->permissions) : false;
-        return redirect()->route('users.index')->with('success','تم التعديل بنجاح');
+        return redirect()->route('users.index')->with('success', 'تم التعديل بنجاح');
     }
 
     /**
@@ -113,6 +114,6 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('users.index')->with('danger','تم مسح المستخدم بنجاح');
+        return redirect()->route('users.index')->with('danger', 'تم مسح المستخدم بنجاح');
     }
 }

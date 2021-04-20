@@ -12,7 +12,7 @@
 <body>
     <x-app-layout>
         <x-slot name="header">
-            <form action="{{ route('branch.store') }}" method="POST">
+            <form action="{{ route('branch.store') }}" method="POST" style="text-align: center">
                 @csrf
                 @method('POST')
                 <input type="text" name="name">
