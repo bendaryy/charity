@@ -70,7 +70,7 @@ class DetailsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'SearchDate' => 'required',
-            'NationalId' => 'required|numeric',
+            'NationalId' => 'required',
 
         ]);
         $details = new Details;
