@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Details;
 use App\Models\Exchange;
 use App\Models\WithDraw;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class WithDrawController extends Controller
 {
@@ -18,7 +16,7 @@ class WithDrawController extends Controller
     public function index(Request $request)
     {
         $withDraws = WithDraw::when($request->search, function ($query) use ($request) {
-            return $query->where('details_id', 'LIKE', '%' . $request->search . "%");
+            return $query->where('details_id', 'like', '%' . $request->search . "%");
         })->get();
 
         return view('withdraw.index', compact('withDraws'));
@@ -48,7 +46,7 @@ class WithDrawController extends Controller
             'type' => 'required',
             'value' => 'required',
             'details_id' => 'required',
-            'date' => 'required'
+            'date' => 'required',
         ]);
         $withDraw = new WithDraw;
         $withDraw->type = $request->type;
@@ -112,37 +110,60 @@ class WithDrawController extends Controller
         $q = $request->text;
 
         // $withDraws = WithDraw::when($request->search3, function ($query) use ($request) {
-        //     return $query->where('details_id', 'LIKE', '%' . $request->search3 . "%");
+        //     return $query->where('details_id', 'like', '%' . $request->search3 . "%");
         // })->where('date', '>=', $fromDate)
         //     ->where('date', '<=', $toDate)
         //     ->get();
 
         // $withDraws = WithDraw::where('type','LIKE',"%".$q."%")->whereHas("userDetails.NationalId",function(Builder $query))
 
-        $withDraws = WithDraw::with(['userDetails' => function ($query) use ($q) {
-            $query->where('NationalId', 'LIKE', '%' . $q . '%')
-            ->orWhere('name', 'LIKE', '%' . $q . "%")
-            ->orWhere('HusbundOrWifeName', 'LIKE', '%' . $q . "%")
-            ->orWhere('firstPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('secondPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('thirdPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('fourthPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('fifthPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('sixPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('sevenPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('eightPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('ninePersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('tenPersonName', 'LIKE', '%' . $q . "%")
-            ->orWhere('firstPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('secondPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('thirdPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('fourthPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('fifthPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('sixPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('sevenPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('eightPersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('ninePersonId', 'LIKE', '%' . $q . "%")
-            ->orWhere('tenPersonId', 'LIKE', '%' . $q . "%");
+        $withDraws = WithDraw::whereHas('userDetails', function ($query) use ($q) {
+            $query->where('NationalId', "LIKE", "%" . $q . "%")->orWhere('HusbundOrWifeId', 'like', '%' . $q . "%")
+                ->orWhere('name', 'like', '%' . $q . "%")
+                ->orWhere('HusbundOrWifeName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonName', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonName', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonName', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonName', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonId', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonId', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonId', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonId', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonId', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonId', 'like', '%' . $q . "%");
+        })->with(['userDetails' => function ($query) use ($q) {
+            $query->where('NationalId', 'like', '%' . $q . '%')->orWhere('name', 'like', '%' . $q . "%")
+                ->orWhere('HusbundOrWifeName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonName', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonName', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonName', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonName', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonId', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonId', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonId', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonId', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonId', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonId', 'like', '%' . $q . "%");
         }])->where('date', '>=', $fromDate)->where('date', '<=', $toDate)->get();
 
         return view('withdraw.index', compact('withDraws'));
