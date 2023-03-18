@@ -122,7 +122,29 @@ class WithDrawController extends Controller
         $withDraws = WithDraw::whereHas('userDetails', function ($query) use ($q) {
             $query->where('NationalId', "LIKE", "%" . $q . "%");
         })->with(['userDetails' => function ($query) use ($q) {
-            $query->where('NationalId', 'like', '%' . $q . '%');
+            $query->where('NationalId', 'like', '%' . $q . '%')
+            ->orWhere('HusbundOrWifeId', 'like', '%' . $q . "%")
+            ->orWhere('name', 'like', '%' . $q . "%")
+            ->orWhere('HusbundOrWifeName', 'like', '%' . $q . "%")
+            ->orWhere('secondPersonName', 'like', '%' . $q . "%")
+            ->orWhere('thirdPersonName', 'like', '%' . $q . "%")
+            ->orWhere('fourthPersonName', 'like', '%' . $q . "%")
+            ->orWhere('fifthPersonName', 'like', '%' . $q . "%")
+            ->orWhere('sixPersonName', 'like', '%' . $q . "%")
+            ->orWhere('sevenPersonName', 'like', '%' . $q . "%")
+            ->orWhere('eightPersonName', 'like', '%' . $q . "%")
+            ->orWhere('ninePersonName', 'like', '%' . $q . "%")
+            ->orWhere('tenPersonName', 'like', '%' . $q . "%")
+            ->orWhere('firstPersonId', 'like', '%' . $q . "%")
+            ->orWhere('secondPersonId', 'like', '%' . $q . "%")
+            ->orWhere('thirdPersonId', 'like', '%' . $q . "%")
+            ->orWhere('fourthPersonId', 'like', '%' . $q . "%")
+            ->orWhere('fifthPersonId', 'like', '%' . $q . "%")
+            ->orWhere('sixPersonId', 'like', '%' . $q . "%")
+            ->orWhere('sevenPersonId', 'like', '%' . $q . "%")
+            ->orWhere('eightPersonId', 'like', '%' . $q . "%")
+            ->orWhere('ninePersonId', 'like', '%' . $q . "%")
+            ->orWhere('tenPersonId', 'like', '%' . $q . "%");
         }])->where('date', '>=', $fromDate)->where('date', '<=', $toDate)->get();
 
         return view('withdraw.index', compact('withDraws'));
