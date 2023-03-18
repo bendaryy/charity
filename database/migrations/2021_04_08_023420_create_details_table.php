@@ -17,7 +17,7 @@ class CreateDetailsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('SearchDate')->nullable();
-            $table->float('NationalId');
+            $table->bigInteger('NationalId');
             $table->string('personsNumbers');
             $table->string('typestate')->nullable();
             $table->string('notee')->nullable();
