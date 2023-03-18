@@ -123,6 +123,7 @@ class WithDrawController extends Controller
             $query->where('NationalId', 'like', '%' . $q . '%')
             ->orWhere('name', 'like', '%' . $q . "%")
             ->orWhere('HusbundOrWifeName', 'like', '%' . $q . "%")
+            ->orWhere('firstPersonName', 'like', '%' . $q . "%")
             ->orWhere('secondPersonName', 'like', '%' . $q . "%")
             ->orWhere('thirdPersonName', 'like', '%' . $q . "%")
             ->orWhere('fourthPersonName', 'like', '%' . $q . "%")
