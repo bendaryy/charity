@@ -120,7 +120,7 @@ class WithDrawController extends Controller
         // $withDraws = WithDraw::where('type','LIKE',"%".$q."%")->whereHas("userDetails.NationalId",function(Builder $query))
 
         $withDraws = WithDraw::whereHas('userDetails', function ($query) use ($q) {
-            $query->where('NationalId', "LIKE", "%" . $q . "%")->orWhere('HusbundOrWifeId', 'like', '%' . $request->search . "%")
+            $query->where('NationalId', "LIKE", "%" . $q . "%")->orWhere('HusbundOrWifeId', 'like', '%' . $q . "%")
             ->orWhere('name', 'like', '%' .$q . "%")
             ->orWhere('HusbundOrWifeName', 'like', '%' .$q . "%")
             ->orWhere('secondPersonName', 'like', '%' .$q . "%")
