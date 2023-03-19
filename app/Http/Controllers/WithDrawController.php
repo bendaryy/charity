@@ -99,9 +99,12 @@ class WithDrawController extends Controller
      * @param  \App\Models\WithDraw  $withDraw
      * @return \Illuminate\Http\Response
      */
-    public function destroy(WithDraw $withDraw)
+    public function destroy($id)
     {
-        //
+        $withDraw = WithDraw::find($id);
+        $withDraw->delete();
+        return redirect()->route('withdraw.index');
+
     }
     public function search(Request $request)
     {

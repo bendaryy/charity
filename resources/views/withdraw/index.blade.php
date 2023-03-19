@@ -68,6 +68,7 @@
                         <th scope="col">قيمة الصرف</th>
                         <th scope="col">الصرف من </th>
                         <th scope="col">بيانات المستفيد</th>
+                        <th scope="col"> مسح</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,6 +84,14 @@
                         <td>
                             <a href="{{ route('details.show',$withDraw->userDetails->id) }}" class="btn btn-info">عرض بيانات المستفيد</a>
                         </td>
+                        <form action="{{ route('withdraw.destroy',$withDraw->id) }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <td>
+                                <button class="btn btn-danger" type="submit" onclick="confirm('هل تريد مسحها؟')" >مسح</button>
+                            </td>
+                        </form>
+
                     </tr>
                     @endforeach
                 </tbody>
