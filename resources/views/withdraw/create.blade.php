@@ -24,21 +24,21 @@
                 <h4 for="type" style="font-size: 20px;font-weight: bold;margin:10px">نوع الصرف</h4>
                 <div class="form-check" style="margin-bottom: 10px">
                     @foreach ($exchanges as $ex)
-                    <input class="form-check-input" type="radio" value="{{ $ex->name }}" name="type">
+                    <input class="form-check-input" type="radio" required value="{{ $ex->name }}" name="type">
                     <label class="form-check-label">
                         {{$ex->name}}
                     </label><br>
 
                     @endforeach
-                    <a  href="{{ route('exchange.create') }}" class="btn btn-primary">إضافة نوع صرف جديد</a>
+                    <a href="{{ route('exchange.create') }}" class="btn btn-primary">إضافة نوع صرف جديد</a>
                 </div>
                 <h4 style="font-size: 20px;font-weight: bold;margin:10px"> العدد / قيمة الصرف</h4>
-                <input type="text" name="value">
+                <input type="text" required name="value">
 
 
 
                 <h2>اختر المستفيد من الصرف</h2>
-                <select required name="details_id" class="select2 form-control" style="width: 30%">
+                <select required name="details_id" id="details_id" class="select2 form-control" style="width: 30%">
                     <option value="" disabled selected="true">اختر المستفيد</option>
                     @foreach($details as $detail)
                     <option value="{{ $detail->id }}">
@@ -53,6 +53,9 @@
                 <input type="date" name="date" value="<?php echo date("Y-m-d");?>">
                 <h4 style="font-size: 20px;font-weight: bold;margin:10px"> التفاصيل</h4>
                 <textarea name="details" id="" cols="30" rows="10"></textarea>
+                <div style="background: black;color:white;margin:20px;pading:20px">
+                    <h2 id="hamada" style="padding:20px"></h2>
+                </div>
                 <div>
 
                     <button class="btn btn-success">إضافة</button>
@@ -67,6 +70,33 @@
         $(document).ready(function() {
 $('.select2').select2();
 });
+
+
+$('#details_id').change(function() {
+    var selectPerson = $(this).val();
+   // $("#hamada").html("test");
+    $.ajax({
+      url: selectPerson,
+      method: 'GET',
+      success: function(response) {
+        // Display the response in the div element with the ID 'my-div'
+        $('#hamada').html("اخر تاريخ صرف بتاريخ : " + response['date']  + "<br>" + " العدد المصروف :  " + (response['value']) + "<br>" +  " نوع الصرف : " + response['type']);
+        console.log(response);
+        if( typeof response['date'] !== 'undefined'){
+            alert("اخر تاريخ صرف بتاريخ : " + response['date']  + '\n' + " العدد المصروف :  " + (response['value']) + '\n' +  " نوع الصرف : " + response['type'] )
+            
+        }else{
+            alert('لم يتم الصرف له من قبل')
+            $('#hamada').html("لم يتم الصرف له من قبل");
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        // Handle the error case
+      }
+    });
+  });
+
+
     </script>
 </body>
 

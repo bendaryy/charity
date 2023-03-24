@@ -262,4 +262,10 @@ class DetailsController extends Controller
         $details = Details::find($id);
         return view('users.exchange.index', compact('details'));
     }
+    public function destroy($id)
+    {
+        $details = Details::find($id);
+        $details->delete();
+        return redirect()->route('details.index')->with('delete', 'تم المسح بنجاح');
+    }
 }

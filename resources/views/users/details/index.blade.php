@@ -52,6 +52,11 @@
                 {{ session()->get('success') }}
             </div>
             @endif
+            @if(session()->has('delete'))
+            <div class="alert alert-danger" style="text-align: center">
+                {{ session()->get('delete') }}
+            </div>
+            @endif
             <table class="table table-striped table-dark">
                 <thead>
                     <tr>
@@ -61,7 +66,7 @@
                         <th scope="col">الجمعية</th>
                         <th scope="col"> تاريخ البحث</th>
                         <th scope="col">الرقم القومى</th>
-                        <th scope="col" colspan="2"> التحكم </th>
+                        <th scope="col" colspan="3"> التحكم </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,6 +87,13 @@
                                 <button type="submit" class="btn btn-success">تعديل البيانات</button>
                             </form>
 
+                        </td>
+                        <td>
+                            <form action="{{ route('details.destroy',$detail->id) }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger" onclick="confirm('هل تريد مسح هذا المستخدم؟')">مسح</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

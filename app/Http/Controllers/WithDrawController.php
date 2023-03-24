@@ -65,9 +65,10 @@ class WithDrawController extends Controller
      * @param  \App\Models\WithDraw  $withDraw
      * @return \Illuminate\Http\Response
      */
-    public function show(WithDraw $withDraw)
+    public function show(Request $request, $id)
     {
-        //
+        $withDraw =  WithDraw::where('details_id',$id)->latest()->first();
+        return $withDraw;
     }
 
     /**
