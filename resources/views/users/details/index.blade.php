@@ -29,9 +29,9 @@
         <x-slot name="header">
 
             @role('user')
-            <form action="{{ route('details.search') }}" method="POST">
+            <form action="{{ route('details.search') }}" method="get">
                 @csrf
-                @method("POST")
+                @method("get")
                 <div class="col-md-4" style="margin: 30px auto">
                     <input type="text" name="search" class="form-control" placeholder="البحث عن طرق الرقم القومى">
                     <button style="position: absolute;
@@ -103,11 +103,11 @@
             @endrole
 
             @role('admin')
-            <form action="{{ route('details.search2') }}" method="POST">
+            <form action="{{ route('details.search2') }}" method="get">
                 @csrf
-                @method("POST")
+                @method("get")
                 <div class="col-md-4" style="margin: 30px auto">
-                    <input type="text" name="search2" class="form-control" placeholder="البحث عن طرق الرقم القومى">
+                    <input type="text" name="search2" class="form-control" placeholder="بحـــث">
                     <button style="position: absolute;
                             top: 0;
                             bottom: 0;

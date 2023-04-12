@@ -20,27 +20,29 @@
             @endpermission
             @endrole
             {{-- <form action="{{ route('withdraw.index') }}" method="GET">
-            <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="البحث عن طريق  الكود">
-                <button type="submit" class="btn btn-primary">بحث</button>
-            </div>
+                <div class="col-md-4">
+                    <input type="text" name="search" class="form-control" placeholder="البحث عن طريق  الكود">
+                    <button type="submit" class="btn btn-primary">بحث</button>
+                </div>
 
             </form> --}}
 
-            <form action="{{ route('search') }}" method="POST">
+            <form action="{{ route('search') }}" method="get">
                 @csrf
-                @method('POST')
+                @method('get')
                 <br>
                 <div class="container">
                     <div class="row">
                         <div class="container-fluid">
                             <div class="form-group row">
                                 <div class="col-sm-2">
-                                    <input type="date" value="{{date("Y-m-d")}}" name="toDate" id="from" required>
+                                    <input type="date" value="{{request()->has('toDate')?request('toDate'):date("
+                                        Y-m-d")}}" name="toDate" id="from" required>
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
                                 <div class="col-sm-2">
-                                    <input type="date" value="{{date("Y-m-d")}}" name="fromDate" id="fromDate" required>
+                                    <input type="date" value="{{request()->has('fromDate')?request('fromDate'):date("
+                                        Y-m-d")}}" name="fromDate" id="fromDate" required>
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
                                 <div class="col-sm-2">
@@ -82,13 +84,15 @@
                         <td>{{ $withDraw->value }}</td>
                         <td>{{ $withDraw->charity->name }}</td>
                         <td>
-                            <a href="{{ route('details.show',$withDraw->userDetails->id) }}" class="btn btn-info">عرض بيانات المستفيد</a>
+                            <a href="{{ route('details.show',$withDraw->userDetails->id) }}" class="btn btn-info">عرض
+                                بيانات المستفيد</a>
                         </td>
                         <form action="{{ route('withdraw.destroy',$withDraw->id) }}" method="post">
                             @method('delete')
                             @csrf
                             <td>
-                                <button class="btn btn-danger" type="submit" onclick="confirm('هل تريد مسحها؟')" >مسح</button>
+                                <button class="btn btn-danger" type="submit"
+                                    onclick="confirm('هل تريد مسحها؟')">مسح</button>
                             </td>
                         </form>
 
