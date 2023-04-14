@@ -36,17 +36,15 @@
                         <div class="container-fluid">
                             <div class="form-group row">
                                 <div class="col-sm-2">
-                                    <input type="date" value="{{request()->has('toDate')?request('toDate'):date("
-                                        Y-m-d")}}" name="toDate" id="from" required>
+                                    <input type="date" value="{{request()->has('toDate')?request('toDate'):''}}" name="toDate" id="from" required>
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
                                 <div class="col-sm-2">
-                                    <input type="date" value="{{request()->has('fromDate')?request('fromDate'):date("
-                                        Y-m-d")}}" name="fromDate" id="fromDate" required>
+                                    <input type="date" value="{{request()->has('fromDate')?request('fromDate'):''}}" name="fromDate" id="fromDate" required>
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="text" placeholder="البحث عن الرقم  القومى">
+                                    <input type="text" name="text" placeholder="بحث">
                                 </div>
                                 <label class="col-form-label col-sm-1" style="margin-left: 30px">إختيارى</label>
                                 <div class="col-sm-6" style="margin: auto;text-align: center;margin-top:20px">

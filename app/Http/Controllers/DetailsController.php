@@ -26,7 +26,6 @@ class DetailsController extends Controller
     {
         $details = Details::when($request->search, function ($query) use ($request) {
             return $query->where('NationalId', 'like', '%' . $request->search . "%")
-                ->where("charity_id", auth()->user()->charity_id)
                 ->orWhere('HusbundOrWifeId', 'like', '%' . $request->search . "%")
                 ->orWhere('name', 'like', '%' . $request->search . "%")
                 ->orWhere('HusbundOrWifeName', 'like', '%' . $request->search . "%")

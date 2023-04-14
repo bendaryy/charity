@@ -34,7 +34,7 @@ Route::resource('exchange', ExchangeController::class)->middleware('auth');
 Route::get('users/exchanges/{id}', [DetailsController::class, 'exchange'])->name('exchange.index')->middleware('auth');
 Route::resource('withdraw', WithDrawController::class)->middleware('auth');
 Route::get('search',[WithDrawController::class,'search'])->name('search')->middleware('auth');
-Route::get('/details/search',[DetailsController::class,'search'])->name('details.search')->middleware('auth');
-Route::get('/details/search2',[DetailsController::class,'search2'])->name('details.search2')->middleware('auth');
+Route::post('/details/search',[DetailsController::class,'search'])->name('details.search')->middleware('auth');
+Route::post('/details/search2',[DetailsController::class,'search2'])->name('details.search2')->middleware('auth');
 Route::resource('branch', BranchController::class)->middleware('auth');
 

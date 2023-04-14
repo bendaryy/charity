@@ -29,11 +29,12 @@
         <x-slot name="header">
 
             @role('user')
-            <form action="{{ route('details.search') }}" method="get">
+            <form action="{{ route('details.search') }}" method="post">
                 @csrf
-                @method("get")
+                @method('post')
+                
                 <div class="col-md-4" style="margin: 30px auto">
-                    <input type="text" name="search" class="form-control" placeholder="البحث عن طرق الرقم القومى">
+                    <input type="text" name="search" class="form-control" placeholder="بحث">
                     <button style="position: absolute;
                             top: 0;
                             bottom: 0;
@@ -81,8 +82,8 @@
                             <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض البيانات</a>
                         </td>
                         <td>
-                            <form method="post" action="{{ route('details.edit',$detail->id) }}" >
-                                @method("POST")
+                            <form method="get" action="{{ route('details.edit',$detail->id) }}">
+                                @method("get")
                                 @csrf
                                 <button type="submit" class="btn btn-success">تعديل البيانات</button>
                             </form>
@@ -92,7 +93,8 @@
                             <form action="{{ route('details.destroy',$detail->id) }}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="btn btn-danger" onclick="confirm('هل تريد مسح هذا المستخدم؟')">مسح</button>
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="confirm('هل تريد مسح هذا المستخدم؟')">مسح</button>
                             </form>
                         </td>
                     </tr>
@@ -103,9 +105,9 @@
             @endrole
 
             @role('admin')
-            <form action="{{ route('details.search2') }}" method="get">
+            <form action="{{ route('details.search2') }}" method="post">
                 @csrf
-                @method("get")
+                @method("post")
                 <div class="col-md-4" style="margin: 30px auto">
                     <input type="text" name="search2" class="form-control" placeholder="بحـــث">
                     <button style="position: absolute;
@@ -151,7 +153,7 @@
                         </td>
 
                         {{-- <td>
-                            <form method="post" action="{{ route('details.edit',$detail->id) }}" >
+                            <form method="post" action="{{ route('details.edit',$detail->id) }}">
                                 @method("POST")
                                 @csrf
                                 <button type="submit" class="btn btn-success">تعديل البيانات</button>
