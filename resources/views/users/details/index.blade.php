@@ -16,6 +16,13 @@
             white-space: nowrap;
         }
 
+        ul.pagination li.active a {
+            background-color: red;
+            /* Change the color to your preferred color */
+            color: #fff;
+            /* Change the color to your preferred color */
+        }
+
         input[type="text"] {
             border: 1px solid black;
             width: 400px;
@@ -30,6 +37,12 @@
         <x-slot name="header">
 
             @role('user')
+
+            @if(Route::is('details.index'))
+            <div style="float: right;padding:10px" class="text-light bg-dark">
+                عدد المستفيدين : {{ $details->total() }}
+            </div>
+            @endif
             <p style="width: 50%;margin:auto;text-align: center">
 
                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
@@ -144,9 +157,18 @@
                     </tbody>
                 </form>
             </table>
+            @if(Route::is('details.index'))
+            {{ $details->links() }}
+            @endif
             @endrole
 
             @role('admin')
+            @if(Route::is('details.index'))
+            <div style="float: right;padding:10px" class="text-light bg-dark">
+
+                عدد المستفيدين : {{ $allDetails->total() }}
+            </div>
+            @endif
             <form action="{{ route('details.search2') }}" method="post">
                 @csrf
                 @method("post")
@@ -195,21 +217,23 @@
                             <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض البيانات</a>
                         </td>
 
-                        {{-- <td>
+                        <td>
                             <form method="post" action="{{ route('details.edit',$detail->id) }}">
                                 @method("POST")
                                 @csrf
                                 <button type="submit" class="btn btn-success">تعديل البيانات</button>
                             </form>
 
-                        </td> --}}
+                        </td>
 
                     </tr>
                     @endforeach
 
                 </tbody>
             </table>
-
+            @if(Route::is('details.index'))
+            {{ $allDetails->links() }}
+            @endif
             @endrole
         </x-slot>
     </x-app-layout>

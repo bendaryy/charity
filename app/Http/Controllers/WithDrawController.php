@@ -15,9 +15,7 @@ class WithDrawController extends Controller
     }
     public function index(Request $request)
     {
-        $withDraws = WithDraw::when($request->search, function ($query) use ($request) {
-            return $query->where('details_id', 'like', '%' . $request->search . "%");
-        })->get();
+        $withDraws = WithDraw::orderBy('id', 'desc')->paginate(20);
 
         return view('withdraw.index', compact('withDraws'));
     }
@@ -67,7 +65,7 @@ class WithDrawController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $withDraw =  WithDraw::where('details_id',$id)->latest()->first();
+        $withDraw = WithDraw::where('details_id', $id)->latest()->first();
         return $withDraw;
     }
 
@@ -168,7 +166,8 @@ class WithDrawController extends Controller
                 ->orWhere('eightPersonId', 'like', '%' . $q . "%")
                 ->orWhere('ninePersonId', 'like', '%' . $q . "%")
                 ->orWhere('tenPersonId', 'like', '%' . $q . "%");
-        }])->where('date', '>=', $fromDate)->where('date', '<=', $toDate)->get();
+        }])->where('date', '>=', $fromDate)->where('date', '<=', $toDate)->paginate(20);
+        $withDraws->appends(["fromDate" => $fromDate, "toDate" => $toDate, "text" => $q]);
 
         return view('withdraw.index', compact('withDraws'));
     }

@@ -190,6 +190,11 @@
                 @endif
             </tbody>
         </table>
+        <form action="{{ route('details.destroy',$details->id) }}" method="post">
+            @method('delete')
+            @csrf
+        <button type="submit" class="btn btn-danger">مسح</button>
+        </form>
     </div>
 </x-slot>
 </x-app-layout>

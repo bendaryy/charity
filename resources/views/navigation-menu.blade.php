@@ -135,10 +135,12 @@
                             <x-jet-dropdown-link href="{{ route('withdraw.index') }}">
                                 {{ __('عرض الصرف') }}
                             </x-jet-dropdown-link>
+                            @role('user')
                             <x-jet-dropdown-link href="{{ route('categories.index') }}">
                                 {{ __('الفئات') }}
                             </x-jet-dropdown-link>
                             @endpermission
+                            @endrole
 
                             <x-jet-dropdown-link href="{{ route('details.index') }}">
                                 {{ __('عرض جميع المستفيدين') }}

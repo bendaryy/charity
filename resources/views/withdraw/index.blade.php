@@ -12,6 +12,9 @@
 <body>
     <x-app-layout>
         <x-slot name="header">
+            <div style="float: right;padding:10px" class="text-light bg-dark">
+                عدد الصرف : {{ $withDraws->total() }}
+            </div>
             @role('user')
             @permission('charity_create')
             <div style="text-align: center;margin: 20px 0">
@@ -28,8 +31,8 @@
             </form> --}}
 
             <form action="{{ route('search') }}" method="get">
-                @csrf
-                @method('get')
+                {{--  @csrf  --}}
+                {{--  @method('get')  --}}
                 <br>
                 <div class="container">
                     <div class="row">
@@ -48,7 +51,7 @@
                                 </div>
                                 <label class="col-form-label col-sm-1" style="margin-left: 30px">إختيارى</label>
                                 <div class="col-sm-6" style="margin: auto;text-align: center;margin-top:20px">
-                                    <button type="submit" class="btn btn-primary" name="search">بحث</button>
+                                    <button type="submit" class="btn btn-primary">بحث</button>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +59,7 @@
                 </div>
 
             </form>
-            <table class="table table-dark">
+            <table class="table table-dark" style="direction: rtl;text-align: center">
                 <thead>
                     <tr>
 
@@ -98,8 +101,10 @@
                     @endforeach
                 </tbody>
             </table>
+            <div>
 
-
+                {{ $withDraws->links() }}
+            </div>
         </x-slot>
     </x-app-layout>
 </body>

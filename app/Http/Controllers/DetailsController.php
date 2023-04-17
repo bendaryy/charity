@@ -19,42 +19,44 @@ class DetailsController extends Controller
     }
     public function index(Request $request)
     {
-        $details = Details::where("charity_id", auth()->user()->charity_id)->with('category')->get();
+        $details = Details::orderBy('id', 'desc')->where("charity_id", auth()->user()->charity_id)->with('category')->paginate(50);
+
         $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
-        $allDetails = Details::all();
-        return view('users.details.index', compact('details', 'allDetails','categories'));
+        $allDetails = Details::paginate(1);
+        return view('users.details.index', compact('details', 'categories','allDetails'));
     }
 
     public function search(Request $request)
     {
+        $q = $request->input('search');
         $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
-        $details = Details::when($request->search, function ($query) use ($request) {
-            return $query->where('NationalId', 'like', '%' . $request->search . "%")
-                ->orWhere('HusbundOrWifeId', 'like', '%' . $request->search . "%")
-                ->orWhere('name', 'like', '%' . $request->search . "%")
-                ->orWhere('HusbundOrWifeName', 'like', '%' . $request->search . "%")
-                ->orWhere('firstPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('secondPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('thirdPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('fourthPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('fifthPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('sixPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('sevenPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('eightPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('ninePersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('tenPersonName', 'like', '%' . $request->search . "%")
-                ->orWhere('firstPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('secondPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('thirdPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('fourthPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('fifthPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('sixPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('sevenPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('eightPersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('ninePersonId', 'like', '%' . $request->search . "%")
-                ->orWhere('tenPersonId', 'like', '%' . $request->search . "%");
+        $details = Details::when($request->search, function ($query) use ($q) {
+            return $query->where('NationalId', 'like', '%' . $q . "%")
+                ->orWhere('HusbundOrWifeId', 'like', '%' . $q . "%")
+                ->orWhere('name', 'like', '%' . $q . "%")
+                ->orWhere('HusbundOrWifeName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonName', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonName', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonName', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonName', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonId', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonId', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonId', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonId', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonId', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonId', 'like', '%' . $q . "%");
         })->where("charity_id", auth()->user()->charity_id)->get();
-        return view('users.details.index', compact('details','categories'));
+        return view('users.details.index', compact('details', 'categories'));
     }
     public function search2(Request $request)
     {
@@ -254,7 +256,7 @@ class DetailsController extends Controller
         DB::table('details')
             ->whereIn('id', $request->users)
             ->update(['category_id' => $request->category_id]);
-        return redirect()->back()->with('success','تم الإضافة الى الفئة بنجاح');
+        return redirect()->back()->with('success', 'تم الإضافة الى الفئة بنجاح');
 
     }
     public function show($id)
