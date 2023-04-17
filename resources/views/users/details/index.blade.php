@@ -12,7 +12,8 @@
         tr,
         th,
         td {
-            text-align: center
+            text-align: center;
+            white-space: nowrap;
         }
 
         input[type="text"] {
@@ -93,7 +94,7 @@
                         <th scope="col">الإسم</th>
                         <th scope="col">الجمعية</th>
                         <th scope="col">الفئة</th>
-                        <th scope="col"> تاريخ البحث</th>
+                        <th scope="col"> تاريخ الإضافة</th>
                         <th scope="col">الرقم القومى</th>
                         <th scope="col" colspan="2"> التحكم </th>
                     </tr>
