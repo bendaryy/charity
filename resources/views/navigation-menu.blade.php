@@ -135,6 +135,9 @@
                             <x-jet-dropdown-link href="{{ route('withdraw.index') }}">
                                 {{ __('عرض الصرف') }}
                             </x-jet-dropdown-link>
+                            <x-jet-dropdown-link href="{{ route('categories.index') }}">
+                                {{ __('الفئات') }}
+                            </x-jet-dropdown-link>
                             @endpermission
 
                             <x-jet-dropdown-link href="{{ route('details.index') }}">

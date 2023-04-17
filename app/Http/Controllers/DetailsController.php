@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Details;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DetailsController extends Controller
 {
@@ -17,13 +19,15 @@ class DetailsController extends Controller
     }
     public function index(Request $request)
     {
-        $details = Details::where("charity_id", auth()->user()->charity_id)->get();
+        $details = Details::where("charity_id", auth()->user()->charity_id)->with('category')->get();
+        $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
         $allDetails = Details::all();
-        return view('users.details.index', compact('details', 'allDetails'));
+        return view('users.details.index', compact('details', 'allDetails','categories'));
     }
 
     public function search(Request $request)
     {
+        $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
         $details = Details::when($request->search, function ($query) use ($request) {
             return $query->where('NationalId', 'like', '%' . $request->search . "%")
                 ->orWhere('HusbundOrWifeId', 'like', '%' . $request->search . "%")
@@ -50,35 +54,35 @@ class DetailsController extends Controller
                 ->orWhere('ninePersonId', 'like', '%' . $request->search . "%")
                 ->orWhere('tenPersonId', 'like', '%' . $request->search . "%");
         })->where("charity_id", auth()->user()->charity_id)->get();
-        return view('users.details.index', compact('details'));
+        return view('users.details.index', compact('details','categories'));
     }
     public function search2(Request $request)
     {
         $allDetails = Details::when($request->search2, function ($query) use ($request) {
             return $query->where('NationalId', 'like', '%' . $request->search2 . "%")
-            ->orWhere('HusbundOrWifeId', 'like', '%' . $request->search . "%")
-            ->orWhere('name', 'like', '%' . $request->search . "%")
-            ->orWhere('HusbundOrWifeName', 'like', '%' . $request->search . "%")
-            ->orWhere('firstPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('secondPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('thirdPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('fourthPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('fifthPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('sixPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('sevenPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('eightPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('ninePersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('tenPersonName', 'like', '%' . $request->search . "%")
-            ->orWhere('firstPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('secondPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('thirdPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('fourthPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('fifthPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('sixPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('sevenPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('eightPersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('ninePersonId', 'like', '%' . $request->search . "%")
-            ->orWhere('tenPersonId', 'like', '%' . $request->search . "%");
+                ->orWhere('HusbundOrWifeId', 'like', '%' . $request->search . "%")
+                ->orWhere('name', 'like', '%' . $request->search . "%")
+                ->orWhere('HusbundOrWifeName', 'like', '%' . $request->search . "%")
+                ->orWhere('firstPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('secondPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('thirdPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('fourthPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('fifthPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('sixPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('sevenPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('eightPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('ninePersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('tenPersonName', 'like', '%' . $request->search . "%")
+                ->orWhere('firstPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('secondPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('thirdPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('fourthPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('fifthPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('sixPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('sevenPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('eightPersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('ninePersonId', 'like', '%' . $request->search . "%")
+                ->orWhere('tenPersonId', 'like', '%' . $request->search . "%");
         })->get();
 
         return view('users.details.index', compact('allDetails'));
@@ -243,6 +247,15 @@ class DetailsController extends Controller
         $details->tenPersonId = $request->tenPersonId;
         $details->save();
         return redirect()->route('details.index')->with('success', 'تم تعديل المستفيد بنجاح');
+    }
+    public function updateCategory(Request $request)
+    {
+
+        DB::table('details')
+            ->whereIn('id', $request->users)
+            ->update(['category_id' => $request->category_id]);
+        return redirect()->back()->with('success','تم الإضافة الى الفئة بنجاح');
+
     }
     public function show($id)
     {

@@ -29,10 +29,37 @@
         <x-slot name="header">
 
             @role('user')
+            <p style="width: 50%;margin:auto;text-align: center">
+
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    إضافة الى فئة
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample" style="width: 50%;margin:auto;text-align: center">
+                <div class="card card-body">
+
+                    <select required name="category_id" id="CategoryId">
+                        <option value="">... اختر الفئة</option>
+                        @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    <br>
+                    <button type="button" style="display: none" class="btn btn-primary"
+                        id="submitButton">إضــــافة</button>
+                </div>
+            </div>
+
+
+
+
+
+
             <form action="{{ route('details.search') }}" method="post">
                 @csrf
                 @method('post')
-                
+
                 <div class="col-md-4" style="margin: 30px auto">
                     <input type="text" name="search" class="form-control" placeholder="بحث">
                     <button style="position: absolute;
@@ -58,49 +85,63 @@
                 {{ session()->get('delete') }}
             </div>
             @endif
-            <table class="table table-striped table-dark">
+            <table class="table table-striped table-dark" style="direction: rtl">
                 <thead>
                     <tr>
-
+                        <th scope="col">#</th>
                         <th scope="col">كود العميل</th>
                         <th scope="col">الإسم</th>
                         <th scope="col">الجمعية</th>
+                        <th scope="col">الفئة</th>
                         <th scope="col"> تاريخ البحث</th>
                         <th scope="col">الرقم القومى</th>
-                        <th scope="col" colspan="3"> التحكم </th>
+                        <th scope="col" colspan="2"> التحكم </th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($details as $detail)
-                    <tr>
-                        <td>{{ $detail->id }}</td>
-                        <td>{{ $detail->name }}</td>
-                        <td>{{ $detail->branch->name }}</td>
-                        <td>{{ $detail->SearchDate }}</td>
-                        <td>{{ $detail->NationalId }}</td>
-                        <td>
-                            <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض البيانات</a>
-                        </td>
-                        <td>
-                            <form method="get" action="{{ route('details.edit',$detail->id) }}">
-                                @method("get")
-                                @csrf
-                                <button type="submit" class="btn btn-success">تعديل البيانات</button>
-                            </form>
+                <form id="MyFormNew" method="get" action="{{ route('updateCategory') }}">
+                    {{-- @csrf
+                    @method('post') --}}
+                    <tbody>
+                        @foreach ($details as $detail)
+                        <tr>
+                            <td><input type="checkbox" name="users[]" value="{{ $detail->id }}"></td>
 
-                        </td>
-                        <td>
-                            <form action="{{ route('details.destroy',$detail->id) }}" method="post">
-                                @method('delete')
-                                @csrf
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="confirm('هل تريد مسح هذا المستخدم؟')">مسح</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                            <td>{{ $detail->id }}</td>
+                            <td>{{ $detail->name }}</td>
+                            <td>{{ $detail->branch->name }}</td>
+                            @if(isset($detail->category->name))
+                            <td>{{ $detail->category->name }}</td>
+                            @else
+                            <td style="color:red">لا ينتمى الى اى فئة</td>
+                            @endif
+                            <td>{{ $detail->SearchDate }}</td>
+                            <td>{{ $detail->NationalId }}</td>
+                            <td>
+                                <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض
+                                    البيانات</a>
+                            </td>
+                            <td>
+                                {{-- <form method="get" action="{{ route('details.edit',$detail->id) }}">
+                                    @method("get")
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">تعديل البيانات</button>
+                                </form> --}}
+                                <a href="{{ route('details.edit',$detail->id) }}" class="btn btn-success">تعديل
+                                    البيانات</a>
 
-                </tbody>
+                            </td>
+                            {{-- <td>
+                                <form action="{{ route('details.destroy',$detail->id) }}" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="confirm('هل تريد مسح هذا المستخدم؟')">مسح</button>
+                                </form>
+                            </td> --}}
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </form>
             </table>
             @endrole
 
@@ -143,6 +184,7 @@
                 <tbody>
                     @foreach ($allDetails as $detail)
                     <tr>
+
                         <td>{{ $detail->id }}</td>
                         <td>{{ $detail->name }}</td>
                         <td>{{ $detail->branch->name }}</td>
@@ -173,6 +215,55 @@
 
 
 
+    {{-- <script>
+        function submitForm() {
+            document.getElementById('MyForm').submit();
+        }
+    </script> --}}
+
+
+
+
+
+    {{-- <script>
+        $(function() {
+            $('form').submit(function() {
+                $('#email').attr('name', 'email');
+                $('form').append($('#email'));
+            });
+        });
+        
+    </script> --}}
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#submitButton').click(function() {
+                $('#CategoryId').appendTo('#MyFormNew');
+                $('#MyFormNew').submit();
+            });
+        });
+
+        $(document).ready(function() {
+            $('#CategoryId').change(function() {
+              if ($(this).val() === '') {
+                $('#submitButton').hide();
+              } else {
+                $('#submitButton').show();
+              }
+            });
+          });
+
+       
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+    </script>
 
 
 
