@@ -99,7 +99,7 @@
                 {{ session()->get('delete') }}
             </div>
             @endif
-            <table class="table table-striped table-dark" style="direction: rtl">
+            <table class="table table-striped table-dark">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -109,6 +109,7 @@
                         <th scope="col">الفئة</th>
                         <th scope="col"> تاريخ الإضافة</th>
                         <th scope="col">الرقم القومى</th>
+                        <th scope="col">صورة الرقم القومى القومى</th>
                         <th scope="col" colspan="2"> التحكم </th>
                     </tr>
                 </thead>
@@ -130,6 +131,11 @@
                             @endif
                             <td>{{ $detail->SearchDate }}</td>
                             <td>{{ $detail->NationalId }}</td>
+                            @if($detail->id_image != NUlL)
+                            <td><a class="btn btn-secondary" href="{{ env('APP_URL').'/public/storage/'.$detail->id_image }}" target="_blank">عرض الصورة</a> </td>
+                            @else
+                            <td><p class="btn btn-danger">لا يوجد صورة بطاقة</p></td>
+                            @endif
                             <td>
                                 <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض
                                     البيانات</a>
@@ -158,7 +164,10 @@
                 </form>
             </table>
             @if(Route::is('details.index'))
-            {{ $details->links() }}
+            <div style="direction: rtl">
+
+                {{ $details->links() }}
+            </div>
             @endif
             @endrole
 

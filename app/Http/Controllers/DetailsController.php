@@ -23,7 +23,7 @@ class DetailsController extends Controller
 
         $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
         $allDetails = Details::paginate(1);
-        return view('users.details.index', compact('details', 'categories','allDetails'));
+        return view('users.details.index', compact('details', 'categories', 'allDetails'));
     }
 
     public function search(Request $request)
@@ -103,6 +103,16 @@ class DetailsController extends Controller
 
         ]);
         $details = new Details;
+
+        if ($request->hasFile('id_image')) {
+            $file = $request->file('id_image');
+
+            $url = $file->storeAs('images', $request->name . '-' . $request->NationalId . rand(1, 1000000) . '.' . $file->guessClientExtension());
+            $details->id_image = $url;
+            // dump(($url));
+            // die();
+        }
+
         $details->name = $request->name;
         $details->SearchDate = $request->SearchDate;
         $details->personsNumbers = $request->personsNumbers;
@@ -187,6 +197,13 @@ class DetailsController extends Controller
         $details->typestate = $request->typestate;
         $details->notee = $request->notee;
         $details->NationalId = $request->NationalId;
+        if ($request->hasFile('id_image')) {
+            $file = $request->file('id_image');
+            $url = $file->storeAs('images', $request->name . '-' . $request->NationalId . rand(1, 1000000) . '.' . $file->guessClientExtension());
+            $details->id_image = $url;
+            // dump(($url));
+            // die();
+        }
         $details->charity_id = auth()->user()->charity_id;
         $details->phone = $request->phone;
         $details->AddressId = $request->AddressId;

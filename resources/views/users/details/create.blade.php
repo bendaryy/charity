@@ -17,7 +17,7 @@
         <div class="row" style="text-align: center;margin: auto">
 
 
-            <form method="POST" action="{{ route('details.store') }}" style="margin: auto">
+            <form method="POST" action="{{ route('details.store') }}" style="margin: auto" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group col" style="margin: auto">
@@ -25,6 +25,15 @@
                     <input id="name" class="form-control" type="text" name="name" :value="old('name')" required
                         autofocus autocomplete="name" />
                 </div>
+
+                
+                <div class="form-group col" style="margin: auto">
+                    <label for="name">{{ __('صورة البطاقة') }}</label>
+                    <input id="name" class="form-control" type="file" name="id_image" :value="old('id_image')" 
+                        autofocus />
+                </div>
+
+
                 <div class="form-group col" style="margin: auto">
                     <label for="typestate">{{ __('حالة المستفيد') }}</label>
                     <input id="typestate" class="form-control" type="text" name="typestate" :value="old('typestate')"

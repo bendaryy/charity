@@ -17,7 +17,7 @@
                 <div class="row" style="text-align: center;margin: auto">
 
 
-                    <form method="POST" action="{{ route('details.update',$details->id) }}" style="margin: auto">
+                    <form method="POST" action="{{ route('details.update',$details->id) }}" enctype="multipart/form-data" style="margin: auto">
                         @csrf
                         @method("PUT")
                         <div class="form-group col" style="margin: auto">
@@ -47,6 +47,24 @@
                             <input id="NationalId" class="form-control" type="number" name="NationalId"
                                 value="{{ $details->NationalId }}" required autofocus autocomplete="NationalId" />
                         </div>
+
+                        <div class="form-group col" style="margin: auto">
+                            @if($details->id_image != NULL)
+                            <label for="id_image">{{ __('تغيير صورة البطاقة الشخصية') }}</label>
+                            @else
+                            <label for="id_image">{{ __('إضافة صورة بطاقة شخصية') }}</label>
+                            @endif
+                            <input id="id_image" class="form-control" type="file" name="id_image"
+                                :value="old('id_image')" autofocus />
+                        </div>
+
+                        @if($details->id_image != NULL)
+                        <a class="btn btn-success" href="{{ env('APP_URL').'/public/storage/'.$details->id_image }}"
+                            target="_blank">عرض الصورة الحالية</a>
+                        <br />
+                        <br />
+                        @endif
+
                         <div class="form-group">
                             <label for="personsNumbers">{{ __('عدد الأبناء') }}</label>
                             <input id="personsNumbers" class="form-control" type="number" name="personsNumbers"
@@ -71,11 +89,11 @@
                         <div class="form-group">
                             <label for="currentAddress">{{ __('حالة الإقامة') }}</label><br>
 
-                            <input type="radio" name="ResidenceStatus" value="شقة ملك"
-                                {{ $details->ResidenceStatus == "شقة ملك"?"checked":"" }}>
+                            <input type="radio" name="ResidenceStatus" value="شقة ملك" {{ $details->ResidenceStatus ==
+                            "شقة ملك"?"checked":"" }}>
                             <label>شقة ملك</label><br>
-                            <input type="radio" name="ResidenceStatus" value="شقة إيجار"
-                                {{ $details->ResidenceStatus=="شقة إيجار"?"checked":"" }}>
+                            <input type="radio" name="ResidenceStatus" value="شقة إيجار" {{
+                                $details->ResidenceStatus=="شقة إيجار"?"checked":"" }}>
                             <label>شقة إيجار</label><br>
                         </div>
                         <div class="form-group">
@@ -85,11 +103,11 @@
                         </div class="form-group">
                         <div>
                             <label for="IncomeMethod">{{ __('طريقة الدخل') }}</label><br>
-                            <input type="radio" name="IncomeMethod" value="عمل حر"
-                                {{ $details->IncomeMethod == "عمل حر"?"checked":"" }}>
+                            <input type="radio" name="IncomeMethod" value="عمل حر" {{ $details->IncomeMethod == "عمل
+                            حر"?"checked":"" }}>
                             <label> عمل حر</label><br>
-                            <input type="radio" name="IncomeMethod" value="نفقة"
-                                {{ $details->IncomeMethod == "نفقة"?"checked":"" }}>
+                            <input type="radio" name="IncomeMethod" value="نفقة" {{ $details->IncomeMethod ==
+                            "نفقة"?"checked":"" }}>
                             <label> نفقة </label><br>
                         </div>
                         <div class="form-group">
@@ -100,32 +118,32 @@
 
                         <div class="form-group">
                             <label for="SocialStatus">{{ __('الحالة الإجتماعية') }}</label><br>
-                            <input type="radio" name="SocialStatus" value="أعزب"
-                                {{ $details->SocialStatus == "أعزب"?'checked':'' }}>
+                            <input type="radio" name="SocialStatus" value="أعزب" {{ $details->SocialStatus ==
+                            "أعزب"?'checked':'' }}>
                             <label>أعزب</label><br>
-                            <input type="radio" name="SocialStatus" value="مطلق"
-                                {{ $details->SocialStatus == "مطلق"?'checked':'' }}>
+                            <input type="radio" name="SocialStatus" value="مطلق" {{ $details->SocialStatus ==
+                            "مطلق"?'checked':'' }}>
                             <label>مطلق</label><br>
-                            <input type="radio" name="SocialStatus" value="منفصل"
-                                {{ $details->SocialStatus == "منفصل"?'checked':'' }}>
+                            <input type="radio" name="SocialStatus" value="منفصل" {{ $details->SocialStatus ==
+                            "منفصل"?'checked':'' }}>
                             <label>منفصل</label><br>
-                            <input type="radio" name="SocialStatus" value="متزوج"
-                                {{ $details->SocialStatus == "متزوج"?'checked':'' }}>
+                            <input type="radio" name="SocialStatus" value="متزوج" {{ $details->SocialStatus ==
+                            "متزوج"?'checked':'' }}>
                             <label>متزوج</label><br>
-                            <input type="radio" name="SocialStatus" value="ارمل"
-                                {{ $details->SocialStatus == "ارمل"?'checked':'' }}>
+                            <input type="radio" name="SocialStatus" value="ارمل" {{ $details->SocialStatus ==
+                            "ارمل"?'checked':'' }}>
                             <label>ارمل</label><br>
                         </div>
                         <div class="form-group">
                             <label for="HealthStatus">{{ __('الحالة الصحية') }}</label><br>
-                            <input type="radio" name="HealthStatus" value="جيدة"
-                                {{ $details->HealthStatus == "جيدة"?'checked':'' }}>
+                            <input type="radio" name="HealthStatus" value="جيدة" {{ $details->HealthStatus ==
+                            "جيدة"?'checked':'' }}>
                             <label>جيدة</label><br>
-                            <input type="radio" name="HealthStatus" value="مرض مؤقت"
-                                {{ $details->HealthStatus == "مرض مؤقت"?'checked':'' }}>
+                            <input type="radio" name="HealthStatus" value="مرض مؤقت" {{ $details->HealthStatus == "مرض
+                            مؤقت"?'checked':'' }}>
                             <label>مرض مؤقت</label><br>
-                            <input type="radio" name="HealthStatus" value="مرض مزمن"
-                                {{ $details->HealthStatus == "مرض مزمن"?'checked':'' }}>
+                            <input type="radio" name="HealthStatus" value="مرض مزمن" {{ $details->HealthStatus == "مرض
+                            مزمن"?'checked':'' }}>
                             <label>مرض مزمن</label><br>
                         </div>
                         <div class="form-group">
@@ -176,17 +194,17 @@
                                 value="{{ $details->firstPersonName }}" autofocus autocomplete="firstPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد الأول') }}</label><br>
-                                <input type="radio" name="firstPersonType" value="زوج"
-                                    {{ $details->firstPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="firstPersonType" value="زوج" {{ $details->firstPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="firstPersonType" value="زوجة"
-                                    {{ $details->firstPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="firstPersonType" value="زوجة" {{ $details->firstPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="firstPersonType" value="إبن"
-                                    {{ $details->firstPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="firstPersonType" value="إبن" {{ $details->firstPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="firstPersonType" value="إبنه"
-                                    {{ $details->firstPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="firstPersonType" value="إبنه" {{ $details->firstPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -202,17 +220,17 @@
                                 value="{{ $details->secondPersonName }}" autofocus autocomplete="secondPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد الثانى ') }}</label><br>
-                                <input type="radio" name="secondPersonType" value="زوج"
-                                    {{ $details->secondPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="secondPersonType" value="زوج" {{ $details->secondPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="secondPersonType" value="زوجة"
-                                    {{ $details->secondPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="secondPersonType" value="زوجة" {{ $details->secondPersonType
+                                == "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="secondPersonType" value="إبن"
-                                    {{ $details->secondPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="secondPersonType" value="إبن" {{ $details->secondPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="secondPersonType" value="إبنه"
-                                    {{ $details->secondPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="secondPersonType" value="إبنه" {{ $details->secondPersonType
+                                == "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -228,17 +246,17 @@
                                 value="{{ $details->thirdPersonName }}" autofocus autocomplete="thirdPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفردالثالث ') }}</label><br>
-                                <input type="radio" name="thirdPersonType" value="زوج"
-                                    {{ $details->thirdPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="thirdPersonType" value="زوج" {{ $details->thirdPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="thirdPersonType" value="زوجة"
-                                    {{ $details->thirdPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="thirdPersonType" value="زوجة" {{ $details->thirdPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="thirdPersonType" value="إبن"
-                                    {{ $details->thirdPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="thirdPersonType" value="إبن" {{ $details->thirdPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="thirdPersonType" value="إبنه"
-                                    {{ $details->thirdPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="thirdPersonType" value="إبنه" {{ $details->thirdPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -254,17 +272,17 @@
                                 value="{{ $details->fourthPersonName }}" autofocus autocomplete="fourthPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد الرابع') }}</label><br>
-                                <input type="radio" name="fourthPersonType" value="زوج"
-                                    {{ $details->fourthPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="fourthPersonType" value="زوج" {{ $details->fourthPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="fourthPersonType" value="زوجة"
-                                    {{ $details->fourthPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="fourthPersonType" value="زوجة" {{ $details->fourthPersonType
+                                == "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="fourthPersonType" value="إبن"
-                                    {{ $details->fourthPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="fourthPersonType" value="إبن" {{ $details->fourthPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="fourthPersonType" value="إبنه"
-                                    {{ $details->fourthPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="fourthPersonType" value="إبنه" {{ $details->fourthPersonType
+                                == "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -280,17 +298,17 @@
                                 value="{{ $details->fifthPersonName }}" autofocus autocomplete="fifthPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد الخامس') }}</label><br>
-                                <input type="radio" name="fifthPersonType" value="زوج"
-                                    {{ $details->fifthPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="fifthPersonType" value="زوج" {{ $details->fifthPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="fifthPersonType" value="زوجة"
-                                    {{ $details->fifthPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="fifthPersonType" value="زوجة" {{ $details->fifthPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="fifthPersonType" value="إبن"
-                                    {{ $details->fifthPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="fifthPersonType" value="إبن" {{ $details->fifthPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="fifthPersonType" value="إبنه"
-                                    {{ $details->fifthPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="fifthPersonType" value="إبنه" {{ $details->fifthPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -306,17 +324,17 @@
                                 value="{{ $details->sixPersonName }}" autofocus autocomplete="sixPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد السادس') }}</label><br>
-                                <input type="radio" name="sixPersonType" value="زوج"
-                                    {{ $details->sixPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="sixPersonType" value="زوج" {{ $details->sixPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="sixPersonType" value="زوجة"
-                                    {{ $details->sixPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="sixPersonType" value="زوجة" {{ $details->sixPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="sixPersonType" value="إبن"
-                                    {{ $details->sixPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="sixPersonType" value="إبن" {{ $details->sixPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="sixPersonType" value="إبنه"
-                                    {{ $details->sixPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="sixPersonType" value="إبنه" {{ $details->sixPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -331,17 +349,17 @@
                                 value="{{ $details->sevenPersonName }}" autofocus autocomplete="sevenPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد السابع') }}</label><br>
-                                <input type="radio" name="sevenPersonType" value="زوج"
-                                    {{ $details->sevenPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="sevenPersonType" value="زوج" {{ $details->sevenPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="sevenPersonType" value="زوجة"
-                                    {{ $details->sevenPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="sevenPersonType" value="زوجة" {{ $details->sevenPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="sevenPersonType" value="إبن"
-                                    {{ $details->sevenPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="sevenPersonType" value="إبن" {{ $details->sevenPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="sevenPersonType" value="إبنه"
-                                    {{ $details->sevenPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="sevenPersonType" value="إبنه" {{ $details->sevenPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -356,17 +374,17 @@
                                 value="{{ $details->eightPersonName }}" autofocus autocomplete="eightPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد الثامن') }}</label><br>
-                                <input type="radio" name="eightPersonType" value="زوج"
-                                    {{ $details->eightPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="eightPersonType" value="زوج" {{ $details->eightPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="eightPersonType" value="زوجة"
-                                    {{ $details->eightPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="eightPersonType" value="زوجة" {{ $details->eightPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="eightPersonType" value="إبن"
-                                    {{ $details->eightPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="eightPersonType" value="إبن" {{ $details->eightPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="eightPersonType" value="إبنه"
-                                    {{ $details->eightPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="eightPersonType" value="إبنه" {{ $details->eightPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -381,17 +399,17 @@
                                 value="{{ $details->ninePersonName }}" autofocus autocomplete="ninePersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد التاسع') }}</label><br>
-                                <input type="radio" name="ninePersonType" value="زوج"
-                                    {{ $details->ninePersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="ninePersonType" value="زوج" {{ $details->ninePersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="ninePersonType" value="زوجة"
-                                    {{ $details->ninePersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="ninePersonType" value="زوجة" {{ $details->ninePersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="ninePersonType" value="إبن"
-                                    {{ $details->ninePersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="ninePersonType" value="إبن" {{ $details->ninePersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="ninePersonType" value="إبنه"
-                                    {{ $details->ninePersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="ninePersonType" value="إبنه" {{ $details->ninePersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">
@@ -407,17 +425,17 @@
                                 value="{{ $details->tenPersonName }}" autofocus autocomplete="tenPersonName" />
                             <div class="form-group">
                                 <label>{{ __('نوع الفرد العاشر') }}</label><br>
-                                <input type="radio" name="tenPersonType" value="زوج"
-                                    {{ $details->tenPersonType == "زوج"?'checked':"" }}>
+                                <input type="radio" name="tenPersonType" value="زوج" {{ $details->tenPersonType ==
+                                "زوج"?'checked':"" }}>
                                 <label>زوج</label><br>
-                                <input type="radio" name="tenPersonType" value="زوجة"
-                                    {{ $details->tenPersonType == "زوجة"?'checked':"" }}>
+                                <input type="radio" name="tenPersonType" value="زوجة" {{ $details->tenPersonType ==
+                                "زوجة"?'checked':"" }}>
                                 <label>زوجة</label><br>
-                                <input type="radio" name="tenPersonType" value="إبن"
-                                    {{ $details->tenPersonType == "إبن"?'checked':"" }}>
+                                <input type="radio" name="tenPersonType" value="إبن" {{ $details->tenPersonType ==
+                                "إبن"?'checked':"" }}>
                                 <label>إبن</label><br>
-                                <input type="radio" name="tenPersonType" value="إبنه"
-                                    {{ $details->tenPersonType == "إبنه"?'checked':"" }}>
+                                <input type="radio" name="tenPersonType" value="إبنه" {{ $details->tenPersonType ==
+                                "إبنه"?'checked':"" }}>
                                 <label>إبنة</label><br>
                             </div>
                             <div class="form-group">

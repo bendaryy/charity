@@ -59,7 +59,7 @@
                 </div>
 
             </form>
-            <table class="table table-dark" style="direction: rtl;text-align: center">
+            <table class="table table-dark" style="text-align: center">
                 <thead>
                     <tr>
 
@@ -101,7 +101,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div>
+            <div style="direction: rtl">
 
                 {{ $withDraws->links() }}
             </div>
