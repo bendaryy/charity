@@ -34,12 +34,12 @@
 
 <body>
     <x-app-layout>
-        <x-slot name="header">
+        {{--  <x-slot name="header">  --}}
 
             @role('user')
 
             @if(Route::is('details.index'))
-            <div style="float: right;padding:10px" class="text-light bg-dark">
+            <div style="float: right;padding:10px;margin-right: 50px" class="text-light bg-dark">
                 عدد المستفيدين : {{ $details->total() }}
             </div>
             @endif
@@ -99,7 +99,7 @@
                 {{ session()->get('delete') }}
             </div>
             @endif
-            <table class="table table-striped table-dark">
+            <table class="table table-striped table-dark" style="width: 95%;margin:auto;margin-bottom: 10px">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -164,7 +164,7 @@
                 </form>
             </table>
             @if(Route::is('details.index'))
-            <div style="direction: rtl">
+            <div style="direction: rtl;margin:20px;padding: 10px">
 
                 {{ $details->links() }}
             </div>
@@ -173,7 +173,7 @@
 
             @role('admin')
             @if(Route::is('details.index'))
-            <div style="float: right;padding:10px" class="text-light bg-dark">
+            <div style="float: right;padding:10px;margin-right: 50px" class="text-light bg-dark">
 
                 عدد المستفيدين : {{ $allDetails->total() }}
             </div>
@@ -244,7 +244,7 @@
             {{ $allDetails->links() }}
             @endif
             @endrole
-        </x-slot>
+        {{--  </x-slot>  --}}
     </x-app-layout>
 
 
