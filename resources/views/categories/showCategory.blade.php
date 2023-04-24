@@ -34,35 +34,18 @@
 
 <body>
     <x-app-layout>
-        {{--  <x-slot name="header">  --}}
+        {{-- <x-slot name="header"> --}}
 
             @role('user')
 
-            @if(Route::is('details.index'))
-            <div style="float: right;padding:10px;margin-right: 50px" class="text-light bg-dark">
-                عدد المستفيدين : {{ $results->total() }}
-            </div>
-            @endif
-            <p style="width: 50%;margin:auto;text-align: center">
 
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    إضافة الى فئة
-                </button>
-            </p>
-            <div class="collapse" id="collapseExample" style="width: 50%;margin:auto;text-align: center">
-                <div class="card card-body">
+            {{-- <div style="float: right;padding:10px;margin-right: 50px" class="text-light bg-dark"> --}}
+                {{-- </div> --}}
 
-                    <select required name="category_id" id="CategoryId">
-                        <option value="">... اختر الفئة</option>
-                        @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                    <br>
-                    <button type="button" style="display: none" class="btn btn-primary"
-                        id="submitButton">إضــــافة</button>
-                </div>
+            <div class="text-light bg-dark" style="text-align: center;margin:20px auto;padding: 20px;width: 50%">
+
+               <span style="font-weight: bold;font-size: 20px"> الفئة : </span>{{ $categoryName['name'] }} <br>
+               <span style="font-weight: bold;font-size: 20px">  عدد المستفيدين : </span>{{ $results->total() }} 
             </div>
 
 
@@ -70,8 +53,8 @@
 
 
 
-            <form action="{{ route('details.index') }}" method="get">
-              
+            <form action="{{ route('showCategory', $categoryName['id']) }}" method="get">
+                
 
                 <div class="col-md-4" style="margin: 30px auto">
                     <input type="text" name="search" class="form-control" placeholder="بحث">
@@ -101,7 +84,6 @@
             <table class="table table-striped table-dark" style="width: 95%;margin:auto;margin-bottom: 10px">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">كود العميل</th>
                         <th scope="col">الإسم</th>
                         <th scope="col">الجمعية</th>
@@ -109,7 +91,7 @@
                         <th scope="col"> تاريخ الإضافة</th>
                         <th scope="col">الرقم القومى</th>
                         <th scope="col">صورة الرقم القومى القومى</th>
-                        <th scope="col" colspan="2"> التحكم </th>
+                        <th scope="col" colspan="3"> التحكم </th>
                     </tr>
                 </thead>
                 <form id="MyFormNew" method="get" action="{{ route('updateCategory') }}">
@@ -118,8 +100,6 @@
                     <tbody>
                         @foreach ($results as $detail)
                         <tr>
-                            <td><input type="checkbox" name="users[]" value="{{ $detail->id }}"></td>
-
                             <td>{{ $detail->id }}</td>
                             <td>{{ $detail->name }}</td>
                             <td>{{ $detail->branch->name }}</td>
@@ -131,9 +111,13 @@
                             <td>{{ $detail->SearchDate }}</td>
                             <td>{{ $detail->NationalId }}</td>
                             @if($detail->id_image != NUlL)
-                            <td><a class="btn btn-secondary" href="{{ env('APP_URL').'/public/storage/'.$detail->id_image }}" target="_blank">عرض الصورة</a> </td>
+                            <td><a class="btn btn-secondary"
+                                    href="{{ env('APP_URL').'/public/storage/'.$detail->id_image }}" target="_blank">عرض
+                                    الصورة</a> </td>
                             @else
-                            <td><p class="btn btn-danger">لا يوجد صورة بطاقة</p></td>
+                            <td>
+                                <p class="btn btn-danger">لا يوجد صورة بطاقة</p>
+                            </td>
                             @endif
                             <td>
                                 <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض
@@ -149,6 +133,9 @@
                                     البيانات</a>
 
                             </td>
+                            <td>
+                                <a href="{{ route('categoryWithdraw',$detail->id) }}" class="btn btn-info">إضافة صرف جديد</a>
+                            </td>
                             {{-- <td>
                                 <form action="{{ route('details.destroy',$detail->id) }}" method="post">
                                     @method('delete')
@@ -162,111 +149,16 @@
                     </tbody>
                 </form>
             </table>
-            @if(Route::is('details.index'))
             <div style="direction: rtl;margin:20px;padding: 10px">
 
                 {{ $results->links() }}
             </div>
-            @endif
             @endrole
 
-            @role('admin')
-            @if(Route::is('details.index'))
-            <div style="float: right;padding:10px;margin-right: 50px" class="text-light bg-dark">
 
-                عدد المستفيدين : {{ $allDetails->total() }}
-            </div>
-            @endif
-            <form action="{{ route('details.search2') }}" method="post">
-                @csrf
-                @method("post")
-                <div class="col-md-4" style="margin: 30px auto">
-                    <input type="text" name="search2" class="form-control" placeholder="بحـــث">
-                    <button style="position: absolute;
-                            top: 0;
-                            bottom: 0;
-                            right: -7px;
-                            background: #2ccd78;
-                            color: white;
-                            padding: 0 15px;
-                            letter-spacing: 1.2px;
-                            border: none;
-                            cursor: pointer;" type="submit" class="btn btn-primary">بحث</button>
-                </div>
-                @if(session()->has('success'))
-                <div class="alert alert-success" style="text-align: center">
-                    {{ session()->get('success') }}
-                </div>
-                @endif
-
-            </form>
-            <table class="table table-striped table-dark">
-                <thead>
-                    <tr>
-
-                        <th scope="col">كود العميل</th>
-                        <th scope="col">الإسم</th>
-                        <th scope="col">الجمعية</th>
-                        <th scope="col"> تاريخ البحث</th>
-                        <th scope="col">الرقم القومى</th>
-                        <th scope="col" colspan="2"> التحكم </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($allDetails as $detail)
-                    <tr>
-
-                        <td>{{ $detail->id }}</td>
-                        <td>{{ $detail->name }}</td>
-                        <td>{{ $detail->branch->name }}</td>
-                        <td>{{ $detail->SearchDate }}</td>
-                        <td>{{ $detail->NationalId }}</td>
-                        <td>
-                            <a href="{{ route('details.show',$detail->id) }}" class="btn btn-primary">عرض البيانات</a>
-                        </td>
-
-                        <td>
-                            <form method="post" action="{{ route('details.edit',$detail->id) }}">
-                                @method("POST")
-                                @csrf
-                                <button type="submit" class="btn btn-success">تعديل البيانات</button>
-                            </form>
-
-                        </td>
-
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
-            @if(Route::is('details.index'))
-            {{ $allDetails->links() }}
-            @endif
-            @endrole
-        {{--  </x-slot>  --}}
     </x-app-layout>
 
 
-
-    {{-- <script>
-        function submitForm() {
-            document.getElementById('MyForm').submit();
-        }
-    </script> --}}
-
-
-
-
-
-    {{-- <script>
-        $(function() {
-            $('form').submit(function() {
-                $('#email').attr('name', 'email');
-                $('form').append($('#email'));
-            });
-        });
-        
-    </script> --}}
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

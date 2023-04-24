@@ -19,17 +19,48 @@ class DetailsController extends Controller
     }
     public function index(Request $request)
     {
-        $details = Details::orderBy('id', 'desc')->where("charity_id", auth()->user()->charity_id)->with('category')->paginate(50);
-
+        // $details = Details::orderBy('id', 'desc')->where("charity_id", auth()->user()->charity_id)->with('category')->paginate(50);
         $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
         $allDetails = Details::paginate(1);
-        return view('users.details.index', compact('details', 'categories', 'allDetails'));
+
+        $q = $request->input('search');
+
+        $query = Details::where(function ($query) use ($q) {
+            $query->where('NationalId', 'like', '%' . $q . "%")
+                ->orWhere('HusbundOrWifeId', 'like', '%' . $q . "%")
+                ->orWhere('name', 'like', '%' . $q . "%")
+                ->orWhere('HusbundOrWifeName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonName', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonName', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonName', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonName', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonName', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonName', 'like', '%' . $q . "%")
+                ->orWhere('firstPersonId', 'like', '%' . $q . "%")
+                ->orWhere('secondPersonId', 'like', '%' . $q . "%")
+                ->orWhere('thirdPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fourthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('fifthPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sixPersonId', 'like', '%' . $q . "%")
+                ->orWhere('sevenPersonId', 'like', '%' . $q . "%")
+                ->orWhere('eightPersonId', 'like', '%' . $q . "%")
+                ->orWhere('ninePersonId', 'like', '%' . $q . "%")
+                ->orWhere('tenPersonId', 'like', '%' . $q . "%");
+        })->where('charity_id', auth()->user()->charity_id)->with('category');
+        $results = $query->paginate(50);
+        $results->appends(['search' => $q]);
+
+        return view('users.details.index', compact('results', 'categories', 'allDetails'));
     }
 
     public function search(Request $request)
     {
-        $q = $request->input('search');
         $categories = Categories::where("charity_id", auth()->user()->charity_id)->get();
+        $q = $request->input('search');
         $details = Details::when($request->search, function ($query) use ($q) {
             return $query->where('NationalId', 'like', '%' . $q . "%")
                 ->orWhere('HusbundOrWifeId', 'like', '%' . $q . "%")
@@ -92,15 +123,18 @@ class DetailsController extends Controller
 
     public function create()
     {
-        return view('users.details.create');
+        $categories = Categories::all();
+        return view('users.details.create', ['categories' => $categories]);
     }
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
             'SearchDate' => 'required',
-            'NationalId' => 'required',
+            'NationalId' => 'nullable|unique:details,NationalId',
 
+        ], [
+            "NationalId.unique" => "الرقم القومى مكرر (مسجل بإسم شخص اخر)",
         ]);
         $details = new Details;
 
@@ -113,6 +147,7 @@ class DetailsController extends Controller
             // die();
         }
 
+        $details->category_id = $request->category_id;
         $details->name = $request->name;
         $details->SearchDate = $request->SearchDate;
         $details->personsNumbers = $request->personsNumbers;
@@ -180,7 +215,7 @@ class DetailsController extends Controller
         $details->tenPersonType = $request->tenPersonType;
         $details->tenPersonId = $request->tenPersonId;
         $details->save();
-        return redirect()->route('details.index');
+        return redirect()->route('details.index')->with('success', 'تم إضافة المستفيد بنجاح');
     }
     public function update(Request $request, $id)
     {

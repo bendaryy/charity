@@ -54,7 +54,7 @@ class WithDrawController extends Controller
         $withDraw->charity_id = auth()->user()->charity_id;
         $withDraw->details = $request->details;
         $withDraw->save();
-        return redirect()->route('withdraw.index');
+        return redirect()->route('withdraw.index')->with('success','تم الصرف بنجاح');
     }
 
     /**

@@ -15,6 +15,11 @@
             <div style="float: right;padding:10px" class="text-light bg-dark">
                 عدد الصرف : {{ $withDraws->total() }}
             </div>
+            @if(session()->has('success'))
+            <div class="alert alert-success" style="text-align: center">
+                {{ session()->get('success') }}
+            </div>
+            @endif
             @role('user')
             @permission('charity_create')
             <div style="text-align: center;margin: 20px 0">
@@ -47,7 +52,7 @@
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ من</label>
                                 <div class="col-sm-2">
-                                    <input type="text" name="text" placeholder="بحث">
+                                    <input type="text" name="text" value="{{request()->has('text')?request('text'):''}}" placeholder="بحث">
                                 </div>
                                 <label class="col-form-label col-sm-1" style="margin-left: 30px">إختيارى</label>
                                 <div class="col-sm-6" style="margin: auto;text-align: center;margin-top:20px">

@@ -73,7 +73,7 @@
                 <tbody>
                     @foreach ($categories as $category)
                     <tr>
-                        <td>{{ $category->name }}</td>
+                        <td><a href="{{ route('showCategory',$category->id) }}">{{ $category->name }}</a></td>
 
                         {{--  <td>
                             <form method="get" action="{{ route('details.edit',$detail->id) }}">
