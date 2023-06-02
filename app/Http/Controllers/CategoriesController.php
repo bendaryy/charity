@@ -59,6 +59,61 @@ class CategoriesController extends Controller
         $categoryName = Categories::find($id);
         return view('categories.showCategory', ['results' => $results, "categoryName" => $categoryName]);
     }
+
+    public function showCategoryWithdraw(Request $request)
+    // public function showCategoryWithdraw($id, Request $request)
+    {
+
+        $text = $request->input('text');
+        $fromDate = $request->input('fromDate');
+        $toDate = $request->input('toDate');
+
+        $q = $request->input('categoryId');
+        $withDraws = WithDraw::orderBy('id', 'desc')->whereHas('userDetails', function ($query) use ($request, $q, $text) {
+            $fromDate = $request->input('fromDate');
+            $toDate = $request->input('toDate');
+
+            if ($q) {
+                $query->where('category_id', $q);
+            }
+            if ($text) {
+                $query->where('NationalId', "LIKE", "%" . $text . "%")
+                    ->orWhere('HusbundOrWifeId', 'like', '%' . $text . "%")
+                    ->orWhere('name', 'LIKE', '%' . $text . "%")
+                    ->orWhere('HusbundOrWifeName', 'like', '%' . $text . "%")
+                    ->orWhere('firstPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('secondPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('thirdPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('fourthPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('fifthPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('sixPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('sevenPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('eightPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('ninePersonName', 'like', '%' . $text . "%")
+                    ->orWhere('tenPersonName', 'like', '%' . $text . "%")
+                    ->orWhere('firstPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('secondPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('thirdPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('fourthPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('fifthPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('sixPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('sevenPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('eightPersonId', 'like', '%' . $text . "%")
+                    ->orWhere('ninePersonId', 'like', '%' . $text . "%")
+                    ->orWhere('tenPersonId', 'like', '%' . $text . "%");
+            }
+
+            // if ($fromDate && $toDate) {
+            //     $query->where('date', '>=', $fromDate)->where('date', '<=', $toDate);
+            // }
+        })->paginate(20);
+        $withDraws->appends(['categoryId' => $q, "fromDate" => $fromDate, "toDate" => $toDate, "text" => $text]);
+
+        // return $withDraws;
+
+        return view('categories.indexWithdraw', compact('withDraws'));
+    }
+
     public function create($id)
     {
         $exchanges = Exchange::all();
@@ -83,6 +138,6 @@ class CategoriesController extends Controller
         $withDraw->charity_id = auth()->user()->charity_id;
         $withDraw->details = $request->details;
         $withDraw->save();
-        return redirect()->route('showCategory', $withDraw->userDetails->category_id)->with('success', 'تم الصرف بنجاح');
+        return redirect()->route('showCategoryWithdraw', ["categoryId" => $withDraw->userDetails->category_id])->with('success', 'تم الصرف بنجاح');
     }
 }

@@ -42,12 +42,17 @@
             {{-- <div style="float: right;padding:10px;margin-right: 50px" class="text-light bg-dark"> --}}
                 {{-- </div> --}}
 
-            <div class="text-light bg-dark" style="text-align: center;margin:20px auto;padding: 20px;width: 50%">
+            <div class="text-light bg-dark" style="text-align: center;margin:20px auto;padding: 20px;width: 30%">
 
                <span style="font-weight: bold;font-size: 20px"> الفئة : </span>{{ $categoryName['name'] }} <br>
                <span style="font-weight: bold;font-size: 20px">  عدد المستفيدين : </span>{{ $results->total() }} 
             </div>
-
+            <div style="text-align: center">
+                <form action="{{ route('showCategoryWithdraw') }}">
+                    <input type="hidden" value="{{ $categoryName['id'] }}" name="categoryId">
+                    <button class="btn btn-success" type="submit">عرض الصرف ل ({{ $categoryName['name'] }})</button>
+                </form>
+            </div>
 
 
 
@@ -57,7 +62,7 @@
                 
 
                 <div class="col-md-4" style="margin: 30px auto">
-                    <input type="text" name="search" class="form-control" placeholder="بحث">
+                    <input type="text" name="search" value="{{ request()->input('search') }}"  class="form-control" placeholder="بحث">
                     <button style="position: absolute;
                             top: 0;
                             bottom: 0;

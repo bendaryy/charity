@@ -45,8 +45,11 @@
                         <div class="form-group">
                             <label for="NationalId">{{ __('الرقم القومى') }}</label>
                             <input id="NationalId" class="form-control" type="number" name="NationalId"
-                                value="{{ $details->NationalId }}" required autofocus autocomplete="NationalId" />
+                                value="{{ $details->NationalId }}"  autofocus autocomplete="NationalId" />
                         </div>
+                        @error('NationalId')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
                         <div class="form-group col" style="margin: auto">
                             @if($details->id_image != NULL)

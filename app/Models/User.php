@@ -64,4 +64,8 @@ class User extends Authenticatable
     public function charity(){
         return $this->belongsTo(Branch::class,'charity_id');
     }
+
+    public function withdraw(){
+        return $this->hasMany(WithDraw::class,'detais_id');
+    }
 }

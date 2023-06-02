@@ -222,7 +222,7 @@ class DetailsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'SearchDate' => 'required',
-            'NationalId' => 'required|numeric',
+            // 'NationalId' => '|numeric',
 
         ]);
         $details = Details::find($id);

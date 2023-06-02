@@ -43,6 +43,8 @@ Route::resource('branch', BranchController::class)->middleware('auth');
 
 route::resource('categories',CategoriesController::class)->middleware('auth');
 Route::get('category/{id}',[CategoriesController::class,'showCategory'])->name('showCategory')->middleware('auth');
+// Route::get('categoryWithraw/{id}',[CategoriesController::class,'showCategory'])->name('showCategory')->middleware('auth');
+Route::get('categoryWithrawId',[CategoriesController::class,'showCategoryWithdraw'])->name('showCategoryWithdraw')->middleware('auth');
 route::get('addCategoryToUser',[DetailsController::class,'updateCategory'])->name('updateCategory')->middleware('auth');
 route::get('categoryWithdraw/{id}',[CategoriesController::class,'create'])->name('categoryWithdraw')->middleware('auth');
 route::post('categoryWithdraw',[CategoriesController::class,'storeWithdraw'])->name('storeWithdraw')->middleware('auth');
