@@ -30,20 +30,20 @@
             $model = App\Models\Categories::find(request()->categoryId);
             @endphp
             <div style="text-align: center;width:500px;padding:10px;margin:auto" class="text-light bg-dark">
-               الفـــئة: {{ $model->name}}
+                الفـــئة: {{ $model->name}}
             </div>
             @if(session()->has('success'))
             <div class="alert alert-success" style="text-align: center">
                 {{ session()->get('success') }}
             </div>
             @endif
-            {{--  @role('user')
+            {{-- @role('user')
             @permission('charity_create')
             <div style="text-align: center;margin: 20px 0">
                 <a class="btn btn-success" href="{{ route('withdraw.create') }}">إنشاء صرف جديد</a>
             </div>
             @endpermission
-            @endrole  --}}
+            @endrole --}}
             {{-- <form action="{{ route('withdraw.index') }}" method="GET">
                 <div class="col-md-4">
                     <input type="text" name="search" class="form-control" placeholder="البحث عن طريق  الكود">
@@ -51,29 +51,35 @@
                 </div>
 
             </form> --}}
-
+            <div>
+                <a href="{{ route('showCategory',request()->categoryId) }}" class="btn btn-success">الرجوع الى
+                    المستفيدين</a>
+            </div>
             <form action="{{ route('showCategoryWithdraw') }}" method="get">
-                {{--  @csrf  --}}
-                {{--  @method('get')  --}}
+                {{-- @csrf --}}
+                {{-- @method('get') --}}
                 <br>
                 <div class="container">
                     <div class="row">
                         <div class="container-fluid">
                             <div class="form-group row">
-                                {{--  <div class="col-sm-2">
-                                    <input type="date" value="{{request()->has('toDate')?request('toDate'):''}}" name="toDate" id="from" >
+                                {{-- <div class="col-sm-2">
+                                    <input type="date" value="{{request()->has('toDate')?request('toDate'):''}}"
+                                        name="toDate" id="from">
                                 </div>
                                 <label for="date" class="col-form-label col-sm-2">التاريخ إلى</label>
                                 <div class="col-sm-2">
-                                    <input type="date" value="{{request()->has('fromDate')?request('fromDate'):''}}" name="fromDate" id="fromDate" >
+                                    <input type="date" value="{{request()->has('fromDate')?request('fromDate'):''}}"
+                                        name="fromDate" id="fromDate">
                                 </div>
-                                <label for="date" class="col-form-label col-sm-2">التاريخ من</label>  --}}
+                                <label for="date" class="col-form-label col-sm-2">التاريخ من</label> --}}
                                 <div class="col-sm-2">
                                 </div>
                                 <label class="col-form-label col-sm-1" style="margin-left: 30px"> </label>
                                 <div class="col-sm-3" style="margin: auto;text-align: center;margin-top:20px">
-                                    
-                                    <input  type="text" name="text" value="{{request()->has('text')?request('text'):''}}" placeholder="بحث">
+
+                                    <input type="text" name="text" value="{{request()->has('text')?request('text'):''}}"
+                                        placeholder="بحث">
                                     <input type="hidden" name="categoryId" value="{{ request()->input('categoryId') }}">
                                     <button type="submit" class="btn btn-primary">بحث</button>
                                 </div>
@@ -89,7 +95,7 @@
 
                         <th scope="col">الكود</th>
                         <th scope="col">الاسم</th>
-                        {{--  <th scope="col">الفئة</th>  --}}
+                        {{-- <th scope="col">الفئة</th> --}}
                         <th scope="col">الرقم القومى</th>
                         <th scope="col">نوع الصرف</th>
                         <th scope="col">تاريخ الصرف</th>
@@ -104,7 +110,7 @@
                     <tr>
                         <td>{{ $withDraw->userDetails->id }}</td>
                         <td>{{ $withDraw->userDetails->name }}</td>
-                        {{--  <td>{{ $withDraw->userDetails->category->name }}</td>  --}}
+                        {{-- <td>{{ $withDraw->userDetails->category->name }}</td> --}}
                         <td>{{ $withDraw->userDetails->NationalId }}</td>
                         <td>{{ $withDraw->type }}</td>
                         <td>{{ $withDraw->date }}</td>
